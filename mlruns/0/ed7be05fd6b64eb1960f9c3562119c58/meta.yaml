@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/ed7be05fd6b64eb1960f9c3562119c58/artifacts
+end_time: 1740424534694
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ed7be05fd6b64eb1960f9c3562119c58
+run_name: honorable-bass-806
+run_uuid: ed7be05fd6b64eb1960f9c3562119c58
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740424534325
+status: 4
+tags: []
+user_id: moyo

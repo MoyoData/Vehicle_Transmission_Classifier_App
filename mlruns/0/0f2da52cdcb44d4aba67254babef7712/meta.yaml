@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/0f2da52cdcb44d4aba67254babef7712/artifacts
+end_time: 1740424618963
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0f2da52cdcb44d4aba67254babef7712
+run_name: silent-grouse-508
+run_uuid: 0f2da52cdcb44d4aba67254babef7712
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740424618624
+status: 4
+tags: []
+user_id: moyo

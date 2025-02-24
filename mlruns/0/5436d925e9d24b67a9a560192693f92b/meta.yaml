@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/5436d925e9d24b67a9a560192693f92b/artifacts
+end_time: 1740425243585
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5436d925e9d24b67a9a560192693f92b
+run_name: blushing-shrew-91
+run_uuid: 5436d925e9d24b67a9a560192693f92b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740425243220
+status: 4
+tags: []
+user_id: moyo

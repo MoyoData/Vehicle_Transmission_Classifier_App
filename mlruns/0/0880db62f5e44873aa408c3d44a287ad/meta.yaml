@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/0880db62f5e44873aa408c3d44a287ad/artifacts
+end_time: 1740423520784
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0880db62f5e44873aa408c3d44a287ad
+run_name: fearless-fawn-674
+run_uuid: 0880db62f5e44873aa408c3d44a287ad
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740423520392
+status: 4
+tags: []
+user_id: moyo

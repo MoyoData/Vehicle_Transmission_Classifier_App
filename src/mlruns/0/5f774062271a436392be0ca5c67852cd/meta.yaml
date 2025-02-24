@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/src/mlruns/0/5f774062271a436392be0ca5c67852cd/artifacts
+end_time: 1740272551828
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5f774062271a436392be0ca5c67852cd
+run_name: defiant-jay-883
+run_uuid: 5f774062271a436392be0ca5c67852cd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740272551819
+status: 4
+tags: []
+user_id: moyo

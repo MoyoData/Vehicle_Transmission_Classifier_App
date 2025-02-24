@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/src/mlruns/0/9c9c8236e5c24add954ab0f134d45c81/artifacts
+end_time: 1740272625603
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9c9c8236e5c24add954ab0f134d45c81
+run_name: able-newt-399
+run_uuid: 9c9c8236e5c24add954ab0f134d45c81
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740272625589
+status: 4
+tags: []
+user_id: moyo

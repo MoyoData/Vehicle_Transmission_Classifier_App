@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/ff909ebec0d647af9536bb9b291c3752/artifacts
+end_time: 1740425670344
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ff909ebec0d647af9536bb9b291c3752
+run_name: treasured-perch-957
+run_uuid: ff909ebec0d647af9536bb9b291c3752
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740425669893
+status: 4
+tags: []
+user_id: moyo

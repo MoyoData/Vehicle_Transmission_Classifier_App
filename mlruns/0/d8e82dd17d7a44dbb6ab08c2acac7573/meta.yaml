@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/d8e82dd17d7a44dbb6ab08c2acac7573/artifacts
+end_time: 1740418352770
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: d8e82dd17d7a44dbb6ab08c2acac7573
+run_name: brawny-horse-738
+run_uuid: d8e82dd17d7a44dbb6ab08c2acac7573
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740418328785
+status: 3
+tags: []
+user_id: moyo

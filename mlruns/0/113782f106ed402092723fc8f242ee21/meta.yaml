@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/113782f106ed402092723fc8f242ee21/artifacts
+end_time: 1740423914199
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 113782f106ed402092723fc8f242ee21
+run_name: placid-stork-398
+run_uuid: 113782f106ed402092723fc8f242ee21
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740423913877
+status: 4
+tags: []
+user_id: moyo

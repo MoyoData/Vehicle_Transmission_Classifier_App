@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/dc641044879f4132b9c6d8b7e588457d/artifacts
+end_time: 1740415407247
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: dc641044879f4132b9c6d8b7e588457d
+run_name: rogue-squid-280
+run_uuid: dc641044879f4132b9c6d8b7e588457d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740415382844
+status: 3
+tags: []
+user_id: moyo

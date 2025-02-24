@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/70d381c6ec844f41b18e7e3d263d3b61/artifacts
+end_time: 1740425262603
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 70d381c6ec844f41b18e7e3d263d3b61
+run_name: sincere-steed-748
+run_uuid: 70d381c6ec844f41b18e7e3d263d3b61
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740425262207
+status: 4
+tags: []
+user_id: moyo

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/1da04d7b2b2e45ab901d1e2984be78f2/artifacts
+end_time: 1740424742302
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 1da04d7b2b2e45ab901d1e2984be78f2
+run_name: resilient-lark-167
+run_uuid: 1da04d7b2b2e45ab901d1e2984be78f2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740424741904
+status: 4
+tags: []
+user_id: moyo

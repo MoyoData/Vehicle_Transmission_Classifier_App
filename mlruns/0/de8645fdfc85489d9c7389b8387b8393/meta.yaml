@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/de8645fdfc85489d9c7389b8387b8393/artifacts
+end_time: 1740278503577
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: de8645fdfc85489d9c7389b8387b8393
+run_name: abrasive-finch-476
+run_uuid: de8645fdfc85489d9c7389b8387b8393
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740278501157
+status: 3
+tags: []
+user_id: moyo

@@ -1,0 +1,8 @@
+[core]
+    autostage = true
+    remote = vehicle_transmission_classifier
+['remote "vehicle_transmission_classifier"']
+    url = gdrive://1xfANpMDXv06vN2VZNwTzDijGaGHSMwVT
+    gdrive_client_id = 323265731591-1dbtd6sipfian27fko7t6brt1k5qaa51.apps.googleusercontent.com
+    gdrive_client_secret = '''GOCSPX-O_cvqYw4ulHqoqKYb 
+kusoITza-qJ'''

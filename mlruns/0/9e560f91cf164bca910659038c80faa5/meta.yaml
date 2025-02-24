@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/9e560f91cf164bca910659038c80faa5/artifacts
+end_time: 1740278338523
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9e560f91cf164bca910659038c80faa5
+run_name: zealous-pug-897
+run_uuid: 9e560f91cf164bca910659038c80faa5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740278336163
+status: 3
+tags: []
+user_id: moyo

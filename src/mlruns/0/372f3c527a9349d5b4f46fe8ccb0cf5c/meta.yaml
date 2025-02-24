@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/src/mlruns/0/372f3c527a9349d5b4f46fe8ccb0cf5c/artifacts
+end_time: 1740274160996
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 372f3c527a9349d5b4f46fe8ccb0cf5c
+run_name: honorable-fowl-794
+run_uuid: 372f3c527a9349d5b4f46fe8ccb0cf5c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740274160987
+status: 4
+tags: []
+user_id: moyo

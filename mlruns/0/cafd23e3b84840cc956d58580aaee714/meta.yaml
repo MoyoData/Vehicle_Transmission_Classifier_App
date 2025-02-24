@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/cafd23e3b84840cc956d58580aaee714/artifacts
+end_time: 1740415600398
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cafd23e3b84840cc956d58580aaee714
+run_name: big-smelt-196
+run_uuid: cafd23e3b84840cc956d58580aaee714
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740415600381
+status: 3
+tags: []
+user_id: moyo

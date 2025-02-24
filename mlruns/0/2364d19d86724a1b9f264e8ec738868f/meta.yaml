@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/2364d19d86724a1b9f264e8ec738868f/artifacts
+end_time: 1740424474017
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2364d19d86724a1b9f264e8ec738868f
+run_name: abundant-penguin-959
+run_uuid: 2364d19d86724a1b9f264e8ec738868f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740424473619
+status: 4
+tags: []
+user_id: moyo

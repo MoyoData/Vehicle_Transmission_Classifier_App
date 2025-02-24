@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/fd2e3c79318c418a9696a93d1c58431e/artifacts
+end_time: 1740424390331
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fd2e3c79318c418a9696a93d1c58431e
+run_name: painted-conch-760
+run_uuid: fd2e3c79318c418a9696a93d1c58431e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740424389976
+status: 4
+tags: []
+user_id: moyo

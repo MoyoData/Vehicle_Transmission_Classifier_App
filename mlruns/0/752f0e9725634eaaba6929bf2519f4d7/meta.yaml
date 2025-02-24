@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/752f0e9725634eaaba6929bf2519f4d7/artifacts
+end_time: 1740428577494
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 752f0e9725634eaaba6929bf2519f4d7
+run_name: enthused-calf-926
+run_uuid: 752f0e9725634eaaba6929bf2519f4d7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740428533849
+status: 3
+tags: []
+user_id: moyo

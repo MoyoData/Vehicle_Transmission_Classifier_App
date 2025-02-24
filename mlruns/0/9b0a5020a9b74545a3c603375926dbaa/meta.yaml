@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/9b0a5020a9b74545a3c603375926dbaa/artifacts
+end_time: 1740416359925
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9b0a5020a9b74545a3c603375926dbaa
+run_name: rumbling-shrimp-382
+run_uuid: 9b0a5020a9b74545a3c603375926dbaa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740416334163
+status: 3
+tags: []
+user_id: moyo

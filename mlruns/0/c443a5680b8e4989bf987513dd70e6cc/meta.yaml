@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/c443a5680b8e4989bf987513dd70e6cc/artifacts
+end_time: 1740425121438
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c443a5680b8e4989bf987513dd70e6cc
+run_name: peaceful-flea-675
+run_uuid: c443a5680b8e4989bf987513dd70e6cc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740425121100
+status: 4
+tags: []
+user_id: moyo

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/91fb653430e846aaa25c677d12b00e9e/artifacts
+end_time: 1740424660311
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 91fb653430e846aaa25c677d12b00e9e
+run_name: melodic-stork-84
+run_uuid: 91fb653430e846aaa25c677d12b00e9e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740424659972
+status: 4
+tags: []
+user_id: moyo

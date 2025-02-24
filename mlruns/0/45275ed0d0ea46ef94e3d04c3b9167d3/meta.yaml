@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/45275ed0d0ea46ef94e3d04c3b9167d3/artifacts
+end_time: 1740425059405
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 45275ed0d0ea46ef94e3d04c3b9167d3
+run_name: beautiful-trout-421
+run_uuid: 45275ed0d0ea46ef94e3d04c3b9167d3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740425059025
+status: 4
+tags: []
+user_id: moyo

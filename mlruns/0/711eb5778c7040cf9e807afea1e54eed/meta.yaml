@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/711eb5778c7040cf9e807afea1e54eed/artifacts
+end_time: 1740428101004
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 711eb5778c7040cf9e807afea1e54eed
+run_name: kindly-fish-824
+run_uuid: 711eb5778c7040cf9e807afea1e54eed
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740427329264
+status: 3
+tags: []
+user_id: moyo

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/057a146693be405f95eb2c15e9385740/artifacts
+end_time: 1740423863355
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 057a146693be405f95eb2c15e9385740
+run_name: upset-fawn-880
+run_uuid: 057a146693be405f95eb2c15e9385740
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740423863118
+status: 4
+tags: []
+user_id: moyo

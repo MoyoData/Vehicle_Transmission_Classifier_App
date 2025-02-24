@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/099a22e8313540fb80c0148b41bdd63d/artifacts
+end_time: 1740425337096
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 099a22e8313540fb80c0148b41bdd63d
+run_name: glamorous-auk-232
+run_uuid: 099a22e8313540fb80c0148b41bdd63d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740425336727
+status: 4
+tags: []
+user_id: moyo

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/50bf901f391d4fbc8768b373fd30b818/artifacts
+end_time: 1740274670155
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 50bf901f391d4fbc8768b373fd30b818
+run_name: youthful-wolf-246
+run_uuid: 50bf901f391d4fbc8768b373fd30b818
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740274670143
+status: 4
+tags: []
+user_id: moyo

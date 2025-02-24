@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/fe777f7d84d848a7ae2f4e4623f33d44/artifacts
+end_time: 1740275065677
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fe777f7d84d848a7ae2f4e4623f33d44
+run_name: rebellious-goat-281
+run_uuid: fe777f7d84d848a7ae2f4e4623f33d44
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740275065664
+status: 4
+tags: []
+user_id: moyo

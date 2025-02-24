@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/029e8a2cd82944f299184bb8b2cd1813/artifacts
+end_time: 1740424381493
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 029e8a2cd82944f299184bb8b2cd1813
+run_name: unleashed-hound-502
+run_uuid: 029e8a2cd82944f299184bb8b2cd1813
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740424381131
+status: 4
+tags: []
+user_id: moyo

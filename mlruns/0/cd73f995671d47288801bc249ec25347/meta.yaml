@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/cd73f995671d47288801bc249ec25347/artifacts
+end_time: 1740428577494
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cd73f995671d47288801bc249ec25347
+run_name: unequaled-zebra-878
+run_uuid: cd73f995671d47288801bc249ec25347
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740428533849
+status: 3
+tags: []
+user_id: moyo
