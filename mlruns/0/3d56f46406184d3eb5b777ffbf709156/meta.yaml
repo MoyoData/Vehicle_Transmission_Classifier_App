@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/3d56f46406184d3eb5b777ffbf709156/artifacts
+end_time: 1740444569878
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 3d56f46406184d3eb5b777ffbf709156
+run_name: blushing-ape-272
+run_uuid: 3d56f46406184d3eb5b777ffbf709156
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740444037532
+status: 3
+tags: []
+user_id: moyo

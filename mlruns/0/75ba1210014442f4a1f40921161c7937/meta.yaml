@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/75ba1210014442f4a1f40921161c7937/artifacts
+end_time: 1740594343428
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 75ba1210014442f4a1f40921161c7937
+run_name: delightful-horse-898
+run_uuid: 75ba1210014442f4a1f40921161c7937
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740593437839
+status: 3
+tags: []
+user_id: moyo

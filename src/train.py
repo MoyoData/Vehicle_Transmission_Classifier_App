@@ -37,6 +37,11 @@ class ModelTrainer:
 
         logging.info("Preprocessing data...")
 
+        # Check for missing values
+        if self.df.isnull().sum().any():
+            logging.warning("Missing values detected. Filling missing values.")
+            self.df.fillna(self.df.mode().iloc[0], inplace=True)  # Fills with mode for categorical features
+
         # Identify categorical columns and encode them
         categorical_columns = self.df.select_dtypes(include=['object']).columns
         for col in categorical_columns:
@@ -48,6 +53,10 @@ class ModelTrainer:
 
     def split_data(self):
         """Splits dataset into training and test sets."""
+        if 'transmission_from_vin' not in self.df.columns:
+            logging.error("'transmission_from_vin' column is missing in the dataset.")
+            raise ValueError("'transmission_from_vin' column is missing in the dataset.")
+
         X = self.df.drop(columns=['transmission_from_vin'])
         y = self.df['transmission_from_vin']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -55,19 +64,9 @@ class ModelTrainer:
         logging.info(f"Data split into train and test sets. Train size: {X_train.shape[0]}, Test size: {X_test.shape[0]}")
         return X_train, X_test, y_train, y_test
 
-    def train_model(self, X_train, y_train, config):
+    def train_model(self, X_train, y_train, param_grid):
         """Performs hyperparameter tuning using GridSearchCV."""
         logging.info("Starting hyperparameter tuning with GridSearchCV...")
-
-        param_grid = config.get("model_params", {
-            'n_estimators': [150, 550, 500],
-            'max_depth': [None, 5, 2],
-            'min_samples_split': [2, 5],
-            'min_samples_leaf': [1, 2],
-            'bootstrap': [True, False],
-            'max_features': ['log2', 'sqrt', None]  
-        })
-        logging.info(f"Using parameter grid: {param_grid}")
 
         # Define the model (RandomForestClassifier)
         model = RandomForestClassifier(random_state=42)
@@ -96,6 +95,7 @@ class ModelTrainer:
         y_pred = self.model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
         logging.info(f"Model Accuracy: {accuracy:.4f}")
+
         return accuracy, y_pred
 
     def save_model(self, model_path):
@@ -112,14 +112,13 @@ if __name__ == "__main__":
     config = None
     training_compute = "default"  # Default value if not provided
 
+    # Load configuration from YAML
     if os.path.exists(config_path):
         try:
             with open(config_path, 'r') as f:
                 config = yaml.safe_load(f)
                 logging.info(f"Loaded config: {config}")
-
-                if "training_compute" in config:
-                    training_compute = config["training_compute"]
+                training_compute = config.get("training_compute", "default")
         except Exception as e:
             logging.error(f"Error loading YAML file: {e}")
     else:
@@ -128,10 +127,8 @@ if __name__ == "__main__":
     # Use MLflow autologging for sklearn
     mlflow.sklearn.autolog()
 
-    # Create a unique run name using parameters from the config
-    run_name = f"classification_{config.get('model_params', {}).get('n_estimators', 'default')}_{training_compute}"
-
     # Start an MLflow run to track the experiment
+    run_name = f"classification_{config.get('model_params', {}).get('n_estimators', 'default')}_{training_compute}"
     with mlflow.start_run(run_name=run_name) as run:
         logging.info(f"Starting MLflow run: {run.info.run_id} with run name: {run_name}")
 
@@ -148,7 +145,15 @@ if __name__ == "__main__":
         X_train, X_test, y_train, y_test = trainer.split_data()
 
         # Train model with hyperparameter tuning
-        model = trainer.train_model(X_train, y_train, config)
+        param_grid = config.get("model_params", {
+            'n_estimators': [150, 550, 500],
+            'max_depth': [None, 5, 2],
+            'min_samples_split': [2, 5],
+            'min_samples_leaf': [1, 2],
+            'bootstrap': [True, False],
+            'max_features': ['log2', 'sqrt', None]
+        })
+        model = trainer.train_model(X_train, y_train, param_grid)
 
         # Evaluate and log model accuracy
         accuracy, y_pred = trainer.evaluate_model(X_test, y_test)

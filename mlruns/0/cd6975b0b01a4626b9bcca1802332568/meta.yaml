@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/cd6975b0b01a4626b9bcca1802332568/artifacts
+end_time: 1740443845820
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cd6975b0b01a4626b9bcca1802332568
+run_name: amusing-fawn-465
+run_uuid: cd6975b0b01a4626b9bcca1802332568
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740443279045
+status: 3
+tags: []
+user_id: moyo

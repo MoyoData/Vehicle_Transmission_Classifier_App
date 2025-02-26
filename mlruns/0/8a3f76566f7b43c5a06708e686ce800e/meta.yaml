@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/8a3f76566f7b43c5a06708e686ce800e/artifacts
+end_time: 1740434302426
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8a3f76566f7b43c5a06708e686ce800e
+run_name: bemused-robin-555
+run_uuid: 8a3f76566f7b43c5a06708e686ce800e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740434248416
+status: 3
+tags: []
+user_id: moyo

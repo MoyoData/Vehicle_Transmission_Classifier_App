@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/46a12891c05e4c60b43c2c059cc0c0d2/artifacts
+end_time: 1740444569878
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 46a12891c05e4c60b43c2c059cc0c0d2
+run_name: beautiful-shrew-490
+run_uuid: 46a12891c05e4c60b43c2c059cc0c0d2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740444037532
+status: 3
+tags: []
+user_id: moyo

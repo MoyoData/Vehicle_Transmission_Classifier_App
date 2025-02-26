@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/cedb2603d15f4f51bdb91275c11aede4/artifacts
+end_time: 1740443845820
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cedb2603d15f4f51bdb91275c11aede4
+run_name: ambitious-hound-499
+run_uuid: cedb2603d15f4f51bdb91275c11aede4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740443279045
+status: 3
+tags: []
+user_id: moyo

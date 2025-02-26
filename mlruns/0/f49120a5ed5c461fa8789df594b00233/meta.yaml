@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/f49120a5ed5c461fa8789df594b00233/artifacts
+end_time: 1740434727420
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f49120a5ed5c461fa8789df594b00233
+run_name: bittersweet-rat-406
+run_uuid: f49120a5ed5c461fa8789df594b00233
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740434642024
+status: 3
+tags: []
+user_id: moyo

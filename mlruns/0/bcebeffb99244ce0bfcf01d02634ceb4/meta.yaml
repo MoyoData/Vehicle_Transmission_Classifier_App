@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/bcebeffb99244ce0bfcf01d02634ceb4/artifacts
+end_time: 1740434302426
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: bcebeffb99244ce0bfcf01d02634ceb4
+run_name: stately-crow-236
+run_uuid: bcebeffb99244ce0bfcf01d02634ceb4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740434248416
+status: 3
+tags: []
+user_id: moyo

@@ -1,0 +1,1012 @@
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/HEAD b/Vehicle_Transmission_Classifier_App.git/HEAD[m
+[1mnew file mode 100644[m
+[1mindex 00000000..b870d826[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/HEAD[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32mref: refs/heads/main[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/config b/Vehicle_Transmission_Classifier_App.git/config[m
+[1mnew file mode 100644[m
+[1mindex 00000000..60305aa7[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/config[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m[core][m
+[32m+[m	[32mrepositoryformatversion = 0[m
+[32m+[m	[32mfilemode = true[m
+[32m+[m	[32mbare = true[m
+[32m+[m[32m[remote "origin"][m
+[32m+[m	[32murl = https://github.com/MoyoData/Vehicle_Transmission_Classifier_App.git[m
+[32m+[m	[32mfetch = +refs/*:refs/*[m
+[32m+[m	[32mmirror = true[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/description b/Vehicle_Transmission_Classifier_App.git/description[m
+[1mnew file mode 100644[m
+[1mindex 00000000..498b267a[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/description[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32mUnnamed repository; edit this file 'description' to name the repository.[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/applypatch-msg.sample b/Vehicle_Transmission_Classifier_App.git/hooks/applypatch-msg.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..a5d7b84a[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/applypatch-msg.sample[m
+[36m@@ -0,0 +1,15 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to check the commit log message taken by[m
+[32m+[m[32m# applypatch from an e-mail message.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The hook should exit with non-zero status after issuing an[m
+[32m+[m[32m# appropriate message if it wants to stop the commit.  The hook is[m
+[32m+[m[32m# allowed to edit the commit message file.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "applypatch-msg".[m
+[32m+[m
+[32m+[m[32m. git-sh-setup[m
+[32m+[m[32mcommitmsg="$(git rev-parse --git-path hooks/commit-msg)"[m
+[32m+[m[32mtest -x "$commitmsg" && exec "$commitmsg" ${1+"$@"}[m
+[32m+[m[32m:[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/commit-msg.sample b/Vehicle_Transmission_Classifier_App.git/hooks/commit-msg.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..b58d1184[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/commit-msg.sample[m
+[36m@@ -0,0 +1,24 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to check the commit log message.[m
+[32m+[m[32m# Called by "git commit" with one argument, the name of the file[m
+[32m+[m[32m# that has the commit message.  The hook should exit with non-zero[m
+[32m+[m[32m# status after issuing an appropriate message if it wants to stop the[m
+[32m+[m[32m# commit.  The hook is allowed to edit the commit message file.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "commit-msg".[m
+[32m+[m
+[32m+[m[32m# Uncomment the below to add a Signed-off-by line to the message.[m
+[32m+[m[32m# Doing this in a hook is a bad idea in general, but the prepare-commit-msg[m
+[32m+[m[32m# hook is more suited to it.[m
+[32m+[m[32m#[m
+[32m+[m[32m# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')[m
+[32m+[m[32m# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"[m
+[32m+[m
+[32m+[m[32m# This example catches duplicate Signed-off-by lines.[m
+[32m+[m
+[32m+[m[32mtest "" = "$(grep '^Signed-off-by: ' "$1" |[m
+[32m+[m	[32m sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {[m
+[32m+[m	[32mecho >&2 Duplicate Signed-off-by lines.[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32m}[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/fsmonitor-watchman.sample b/Vehicle_Transmission_Classifier_App.git/hooks/fsmonitor-watchman.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..23e856f5[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/fsmonitor-watchman.sample[m
+[36m@@ -0,0 +1,174 @@[m
+[32m+[m[32m#!/usr/bin/perl[m
+[32m+[m
+[32m+[m[32muse strict;[m
+[32m+[m[32muse warnings;[m
+[32m+[m[32muse IPC::Open2;[m
+[32m+[m
+[32m+[m[32m# An example hook script to integrate Watchman[m
+[32m+[m[32m# (https://facebook.github.io/watchman/) with git to speed up detecting[m
+[32m+[m[32m# new and modified files.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The hook is passed a version (currently 2) and last update token[m
+[32m+[m[32m# formatted as a string and outputs to stdout a new update token and[m
+[32m+[m[32m# all files that have been modified since the update token. Paths must[m
+[32m+[m[32m# be relative to the root of the working tree and separated by a single NUL.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "query-watchman" and set[m
+[32m+[m[32m# 'git config core.fsmonitor .git/hooks/query-watchman'[m
+[32m+[m[32m#[m
+[32m+[m[32mmy ($version, $last_update_token) = @ARGV;[m
+[32m+[m
+[32m+[m[32m# Uncomment for debugging[m
+[32m+[m[32m# print STDERR "$0 $version $last_update_token\n";[m
+[32m+[m
+[32m+[m[32m# Check the hook interface version[m
+[32m+[m[32mif ($version ne 2) {[m
+[32m+[m	[32mdie "Unsupported query-fsmonitor hook version '$version'.\n" .[m
+[32m+[m	[32m    "Falling back to scanning...\n";[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mmy $git_work_tree = get_working_dir();[m
+[32m+[m
+[32m+[m[32mmy $retry = 1;[m
+[32m+[m
+[32m+[m[32mmy $json_pkg;[m
+[32m+[m[32meval {[m
+[32m+[m	[32mrequire JSON::XS;[m
+[32m+[m	[32m$json_pkg = "JSON::XS";[m
+[32m+[m	[32m1;[m
+[32m+[m[32m} or do {[m
+[32m+[m	[32mrequire JSON::PP;[m
+[32m+[m	[32m$json_pkg = "JSON::PP";[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mlaunch_watchman();[m
+[32m+[m
+[32m+[m[32msub launch_watchman {[m
+[32m+[m	[32mmy $o = watchman_query();[m
+[32m+[m	[32mif (is_work_tree_watched($o)) {[m
+[32m+[m		[32moutput_result($o->{clock}, @{$o->{files}});[m
+[32m+[m	[32m}[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32msub output_result {[m
+[32m+[m	[32mmy ($clockid, @files) = @_;[m
+[32m+[m
+[32m+[m	[32m# Uncomment for debugging watchman output[m
+[32m+[m	[32m# open (my $fh, ">", ".git/watchman-output.out");[m
+[32m+[m	[32m# binmode $fh, ":utf8";[m
+[32m+[m	[32m# print $fh "$clockid\n@files\n";[m
+[32m+[m	[32m# close $fh;[m
+[32m+[m
+[32m+[m	[32mbinmode STDOUT, ":utf8";[m
+[32m+[m	[32mprint $clockid;[m
+[32m+[m	[32mprint "\0";[m
+[32m+[m	[32mlocal $, = "\0";[m
+[32m+[m	[32mprint @files;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32msub watchman_clock {[m
+[32m+[m	[32mmy $response = qx/watchman clock "$git_work_tree"/;[m
+[32m+[m	[32mdie "Failed to get clock id on '$git_work_tree'.\n" .[m
+[32m+[m		[32m"Falling back to scanning...\n" if $? != 0;[m
+[32m+[m
+[32m+[m	[32mreturn $json_pkg->new->utf8->decode($response);[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32msub watchman_query {[m
+[32m+[m	[32mmy $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')[m
+[32m+[m	[32mor die "open2() failed: $!\n" .[m
+[32m+[m	[32m"Falling back to scanning...\n";[m
+[32m+[m
+[32m+[m	[32m# In the query expression below we're asking for names of files that[m
+[32m+[m	[32m# changed since $last_update_token but not from the .git folder.[m
+[32m+[m	[32m#[m
+[32m+[m	[32m# To accomplish this, we're using the "since" generator to use the[m
+[32m+[m	[32m# recency index to select candidate nodes and "fields" to limit the[m
+[32m+[m	[32m# output to file names only. Then we're using the "expression" term to[m
+[32m+[m	[32m# further constrain the results.[m
+[32m+[m	[32mmy $last_update_line = "";[m
+[32m+[m	[32mif (substr($last_update_token, 0, 1) eq "c") {[m
+[32m+[m		[32m$last_update_token = "\"$last_update_token\"";[m
+[32m+[m		[32m$last_update_line = qq[\n"since": $last_update_token,];[m
+[32m+[m	[32m}[m
+[32m+[m	[32mmy $query = <<"	END";[m
+[32m+[m		[32m["query", "$git_work_tree", {$last_update_line[m
+[32m+[m			[32m"fields": ["name"],[m
+[32m+[m			[32m"expression": ["not", ["dirname", ".git"]][m
+[32m+[m		[32m}][m
+[32m+[m	[32mEND[m
+[32m+[m
+[32m+[m	[32m# Uncomment for debugging the watchman query[m
+[32m+[m	[32m# open (my $fh, ">", ".git/watchman-query.json");[m
+[32m+[m	[32m# print $fh $query;[m
+[32m+[m	[32m# close $fh;[m
+[32m+[m
+[32m+[m	[32mprint CHLD_IN $query;[m
+[32m+[m	[32mclose CHLD_IN;[m
+[32m+[m	[32mmy $response = do {local $/; <CHLD_OUT>};[m
+[32m+[m
+[32m+[m	[32m# Uncomment for debugging the watch response[m
+[32m+[m	[32m# open ($fh, ">", ".git/watchman-response.json");[m
+[32m+[m	[32m# print $fh $response;[m
+[32m+[m	[32m# close $fh;[m
+[32m+[m
+[32m+[m	[32mdie "Watchman: command returned no output.\n" .[m
+[32m+[m	[32m"Falling back to scanning...\n" if $response eq "";[m
+[32m+[m	[32mdie "Watchman: command returned invalid output: $response\n" .[m
+[32m+[m	[32m"Falling back to scanning...\n" unless $response =~ /^\{/;[m
+[32m+[m
+[32m+[m	[32mreturn $json_pkg->new->utf8->decode($response);[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32msub is_work_tree_watched {[m
+[32m+[m	[32mmy ($output) = @_;[m
+[32m+[m	[32mmy $error = $output->{error};[m
+[32m+[m	[32mif ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {[m
+[32m+[m		[32m$retry--;[m
+[32m+[m		[32mmy $response = qx/watchman watch "$git_work_tree"/;[m
+[32m+[m		[32mdie "Failed to make watchman watch '$git_work_tree'.\n" .[m
+[32m+[m		[32m    "Falling back to scanning...\n" if $? != 0;[m
+[32m+[m		[32m$output = $json_pkg->new->utf8->decode($response);[m
+[32m+[m		[32m$error = $output->{error};[m
+[32m+[m		[32mdie "Watchman: $error.\n" .[m
+[32m+[m		[32m"Falling back to scanning...\n" if $error;[m
+[32m+[m
+[32m+[m		[32m# Uncomment for debugging watchman output[m
+[32m+[m		[32m# open (my $fh, ">", ".git/watchman-output.out");[m
+[32m+[m		[32m# close $fh;[m
+[32m+[m
+[32m+[m		[32m# Watchman will always return all files on the first query so[m
+[32m+[m		[32m# return the fast "everything is dirty" flag to git and do the[m
+[32m+[m		[32m# Watchman query just to get it over with now so we won't pay[m
+[32m+[m		[32m# the cost in git to look up each individual file.[m
+[32m+[m		[32mmy $o = watchman_clock();[m
+[32m+[m		[32m$error = $output->{error};[m
+[32m+[m
+[32m+[m		[32mdie "Watchman: $error.\n" .[m
+[32m+[m		[32m"Falling back to scanning...\n" if $error;[m
+[32m+[m
+[32m+[m		[32moutput_result($o->{clock}, ("/"));[m
+[32m+[m		[32m$last_update_token = $o->{clock};[m
+[32m+[m
+[32m+[m		[32meval { launch_watchman() };[m
+[32m+[m		[32mreturn 0;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mdie "Watchman: $error.\n" .[m
+[32m+[m	[32m"Falling back to scanning...\n" if $error;[m
+[32m+[m
+[32m+[m	[32mreturn 1;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32msub get_working_dir {[m
+[32m+[m	[32mmy $working_dir;[m
+[32m+[m	[32mif ($^O =~ 'msys' || $^O =~ 'cygwin') {[m
+[32m+[m		[32m$working_dir = Win32::GetCwd();[m
+[32m+[m		[32m$working_dir =~ tr/\\/\//;[m
+[32m+[m	[32m} else {[m
+[32m+[m		[32mrequire Cwd;[m
+[32m+[m		[32m$working_dir = Cwd::cwd();[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mreturn $working_dir;[m
+[32m+[m[32m}[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/post-update.sample b/Vehicle_Transmission_Classifier_App.git/hooks/post-update.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..ec17ec19[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/post-update.sample[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to prepare a packed repository for use over[m
+[32m+[m[32m# dumb transports.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "post-update".[m
+[32m+[m
+[32m+[m[32mexec git update-server-info[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/pre-applypatch.sample b/Vehicle_Transmission_Classifier_App.git/hooks/pre-applypatch.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..4142082b[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/pre-applypatch.sample[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to verify what is about to be committed[m
+[32m+[m[32m# by applypatch from an e-mail message.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The hook should exit with non-zero status after issuing an[m
+[32m+[m[32m# appropriate message if it wants to stop the commit.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "pre-applypatch".[m
+[32m+[m
+[32m+[m[32m. git-sh-setup[m
+[32m+[m[32mprecommit="$(git rev-parse --git-path hooks/pre-commit)"[m
+[32m+[m[32mtest -x "$precommit" && exec "$precommit" ${1+"$@"}[m
+[32m+[m[32m:[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/pre-commit.sample b/Vehicle_Transmission_Classifier_App.git/hooks/pre-commit.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..e144712c[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/pre-commit.sample[m
+[36m@@ -0,0 +1,49 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to verify what is about to be committed.[m
+[32m+[m[32m# Called by "git commit" with no arguments.  The hook should[m
+[32m+[m[32m# exit with non-zero status after issuing an appropriate message if[m
+[32m+[m[32m# it wants to stop the commit.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "pre-commit".[m
+[32m+[m
+[32m+[m[32mif git rev-parse --verify HEAD >/dev/null 2>&1[m
+[32m+[m[32mthen[m
+[32m+[m	[32magainst=HEAD[m
+[32m+[m[32melse[m
+[32m+[m	[32m# Initial commit: diff against an empty tree object[m
+[32m+[m	[32magainst=$(git hash-object -t tree /dev/null)[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32m# If you want to allow non-ASCII filenames set this variable to true.[m
+[32m+[m[32mallownonascii=$(git config --type=bool hooks.allownonascii)[m
+[32m+[m
+[32m+[m[32m# Redirect output to stderr.[m
+[32m+[m[32mexec 1>&2[m
+[32m+[m
+[32m+[m[32m# Cross platform projects tend to avoid non-ASCII filenames; prevent[m
+[32m+[m[32m# them from being added to the repository. We exploit the fact that the[m
+[32m+[m[32m# printable range starts at the space character and ends with tilde.[m
+[32m+[m[32mif [ "$allownonascii" != "true" ] &&[m
+[32m+[m	[32m# Note that the use of brackets around a tr range is ok here, (it's[m
+[32m+[m	[32m# even required, for portability to Solaris 10's /usr/bin/tr), since[m
+[32m+[m	[32m# the square bracket bytes happen to fall in the designated range.[m
+[32m+[m	[32mtest $(git diff --cached --name-only --diff-filter=A -z $against |[m
+[32m+[m	[32m  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0[m
+[32m+[m[32mthen[m
+[32m+[m	[32mcat <<\EOF[m
+[32m+[m[32mError: Attempt to add a non-ASCII file name.[m
+[32m+[m
+[32m+[m[32mThis can cause problems if you want to work with people on other platforms.[m
+[32m+[m
+[32m+[m[32mTo be portable it is advisable to rename the file.[m
+[32m+[m
+[32m+[m[32mIf you know what you are doing you can disable this check using:[m
+[32m+[m
+[32m+[m[32m  git config hooks.allownonascii true[m
+[32m+[m[32mEOF[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32m# If there are whitespace errors, print the offending file names and fail.[m
+[32m+[m[32mexec git diff-index --check --cached $against --[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/pre-merge-commit.sample b/Vehicle_Transmission_Classifier_App.git/hooks/pre-merge-commit.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..399eab19[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/pre-merge-commit.sample[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to verify what is about to be committed.[m
+[32m+[m[32m# Called by "git merge" with no arguments.  The hook should[m
+[32m+[m[32m# exit with non-zero status after issuing an appropriate message to[m
+[32m+[m[32m# stderr if it wants to stop the merge commit.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "pre-merge-commit".[m
+[32m+[m
+[32m+[m[32m. git-sh-setup[m
+[32m+[m[32mtest -x "$GIT_DIR/hooks/pre-commit" &&[m
+[32m+[m[32m        exec "$GIT_DIR/hooks/pre-commit"[m
+[32m+[m[32m:[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/pre-push.sample b/Vehicle_Transmission_Classifier_App.git/hooks/pre-push.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..4ce688d3[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/pre-push.sample[m
+[36m@@ -0,0 +1,53 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m
+[32m+[m[32m# An example hook script to verify what is about to be pushed.  Called by "git[m
+[32m+[m[32m# push" after it has checked the remote status, but before anything has been[m
+[32m+[m[32m# pushed.  If this script exits with a non-zero status nothing will be pushed.[m
+[32m+[m[32m#[m
+[32m+[m[32m# This hook is called with the following parameters:[m
+[32m+[m[32m#[m
+[32m+[m[32m# $1 -- Name of the remote to which the push is being done[m
+[32m+[m[32m# $2 -- URL to which the push is being done[m
+[32m+[m[32m#[m
+[32m+[m[32m# If pushing without using a named remote those arguments will be equal.[m
+[32m+[m[32m#[m
+[32m+[m[32m# Information about the commits which are being pushed is supplied as lines to[m
+[32m+[m[32m# the standard input in the form:[m
+[32m+[m[32m#[m
+[32m+[m[32m#   <local ref> <local oid> <remote ref> <remote oid>[m
+[32m+[m[32m#[m
+[32m+[m[32m# This sample shows how to prevent push of commits where the log message starts[m
+[32m+[m[32m# with "WIP" (work in progress).[m
+[32m+[m
+[32m+[m[32mremote="$1"[m
+[32m+[m[32murl="$2"[m
+[32m+[m
+[32m+[m[32mzero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')[m
+[32m+[m
+[32m+[m[32mwhile read local_ref local_oid remote_ref remote_oid[m
+[32m+[m[32mdo[m
+[32m+[m	[32mif test "$local_oid" = "$zero"[m
+[32m+[m	[32mthen[m
+[32m+[m		[32m# Handle delete[m
+[32m+[m		[32m:[m
+[32m+[m	[32melse[m
+[32m+[m		[32mif test "$remote_oid" = "$zero"[m
+[32m+[m		[32mthen[m
+[32m+[m			[32m# New branch, examine all commits[m
+[32m+[m			[32mrange="$local_oid"[m
+[32m+[m		[32melse[m
+[32m+[m			[32m# Update to existing branch, examine new commits[m
+[32m+[m			[32mrange="$remote_oid..$local_oid"[m
+[32m+[m		[32mfi[m
+[32m+[m
+[32m+[m		[32m# Check for WIP commit[m
+[32m+[m		[32mcommit=$(git rev-list -n 1 --grep '^WIP' "$range")[m
+[32m+[m		[32mif test -n "$commit"[m
+[32m+[m		[32mthen[m
+[32m+[m			[32mecho >&2 "Found WIP commit in $local_ref, not pushing"[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mfi[m
+[32m+[m	[32mfi[m
+[32m+[m[32mdone[m
+[32m+[m
+[32m+[m[32mexit 0[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/pre-rebase.sample b/Vehicle_Transmission_Classifier_App.git/hooks/pre-rebase.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..6cbef5c3[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/pre-rebase.sample[m
+[36m@@ -0,0 +1,169 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# Copyright (c) 2006, 2008 Junio C Hamano[m
+[32m+[m[32m#[m
+[32m+[m[32m# The "pre-rebase" hook is run just before "git rebase" starts doing[m
+[32m+[m[32m# its job, and can prevent the command from running by exiting with[m
+[32m+[m[32m# non-zero status.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The hook is called with the following parameters:[m
+[32m+[m[32m#[m
+[32m+[m[32m# $1 -- the upstream the series was forked from.[m
+[32m+[m[32m# $2 -- the branch being rebased (or empty when rebasing the current branch).[m
+[32m+[m[32m#[m
+[32m+[m[32m# This sample shows how to prevent topic branches that are already[m
+[32m+[m[32m# merged to 'next' branch from getting rebased, because allowing it[m
+[32m+[m[32m# would result in rebasing already published history.[m
+[32m+[m
+[32m+[m[32mpublish=next[m
+[32m+[m[32mbasebranch="$1"[m
+[32m+[m[32mif test "$#" = 2[m
+[32m+[m[32mthen[m
+[32m+[m	[32mtopic="refs/heads/$2"[m
+[32m+[m[32melse[m
+[32m+[m	[32mtopic=`git symbolic-ref HEAD` ||[m
+[32m+[m	[32mexit 0 ;# we do not interrupt rebasing detached HEAD[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32mcase "$topic" in[m
+[32m+[m[32mrefs/heads/??/*)[m
+[32m+[m	[32m;;[m
+[32m+[m[32m*)[m
+[32m+[m	[32mexit 0 ;# we do not interrupt others.[m
+[32m+[m	[32m;;[m
+[32m+[m[32mesac[m
+[32m+[m
+[32m+[m[32m# Now we are dealing with a topic branch being rebased[m
+[32m+[m[32m# on top of master.  Is it OK to rebase it?[m
+[32m+[m
+[32m+[m[32m# Does the topic really exist?[m
+[32m+[m[32mgit show-ref -q "$topic" || {[m
+[32m+[m	[32mecho >&2 "No such branch $topic"[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m# Is topic fully merged to master?[m
+[32m+[m[32mnot_in_master=`git rev-list --pretty=oneline ^master "$topic"`[m
+[32m+[m[32mif test -z "$not_in_master"[m
+[32m+[m[32mthen[m
+[32m+[m	[32mecho >&2 "$topic is fully merged to master; better remove it."[m
+[32m+[m	[32mexit 1 ;# we could allow it, but there is no point.[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32m# Is topic ever merged to next?  If so you should not be rebasing it.[m
+[32m+[m[32monly_next_1=`git rev-list ^master "^$topic" ${publish} | sort`[m
+[32m+[m[32monly_next_2=`git rev-list ^master           ${publish} | sort`[m
+[32m+[m[32mif test "$only_next_1" = "$only_next_2"[m
+[32m+[m[32mthen[m
+[32m+[m	[32mnot_in_topic=`git rev-list "^$topic" master`[m
+[32m+[m	[32mif test -z "$not_in_topic"[m
+[32m+[m	[32mthen[m
+[32m+[m		[32mecho >&2 "$topic is already up to date with master"[m
+[32m+[m		[32mexit 1 ;# we could allow it, but there is no point.[m
+[32m+[m	[32melse[m
+[32m+[m		[32mexit 0[m
+[32m+[m	[32mfi[m
+[32m+[m[32melse[m
+[32m+[m	[32mnot_in_next=`git rev-list --pretty=oneline ^${publish} "$topic"`[m
+[32m+[m	[32m/usr/bin/perl -e '[m
+[32m+[m		[32mmy $topic = $ARGV[0];[m
+[32m+[m		[32mmy $msg = "* $topic has commits already merged to public branch:\n";[m
+[32m+[m		[32mmy (%not_in_next) = map {[m
+[32m+[m			[32m/^([0-9a-f]+) /;[m
+[32m+[m			[32m($1 => 1);[m
+[32m+[m		[32m} split(/\n/, $ARGV[1]);[m
+[32m+[m		[32mfor my $elem (map {[m
+[32m+[m				[32m/^([0-9a-f]+) (.*)$/;[m
+[32m+[m				[32m[$1 => $2];[m
+[32m+[m			[32m} split(/\n/, $ARGV[2])) {[m
+[32m+[m			[32mif (!exists $not_in_next{$elem->[0]}) {[m
+[32m+[m				[32mif ($msg) {[m
+[32m+[m					[32mprint STDERR $msg;[m
+[32m+[m					[32mundef $msg;[m
+[32m+[m				[32m}[m
+[32m+[m				[32mprint STDERR " $elem->[1]\n";[m
+[32m+[m			[32m}[m
+[32m+[m		[32m}[m
+[32m+[m	[32m' "$topic" "$not_in_next" "$not_in_master"[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32m<<\DOC_END[m
+[32m+[m
+[32m+[m[32mThis sample hook safeguards topic branches that have been[m
+[32m+[m[32mpublished from being rewound.[m
+[32m+[m
+[32m+[m[32mThe workflow assumed here is:[m
+[32m+[m
+[32m+[m[32m * Once a topic branch forks from "master", "master" is never[m
+[32m+[m[32m   merged into it again (either directly or indirectly).[m
+[32m+[m
+[32m+[m[32m * Once a topic branch is fully cooked and merged into "master",[m
+[32m+[m[32m   it is deleted.  If you need to build on top of it to correct[m
+[32m+[m[32m   earlier mistakes, a new topic branch is created by forking at[m
+[32m+[m[32m   the tip of the "master".  This is not strictly necessary, but[m
+[32m+[m[32m   it makes it easier to keep your history simple.[m
+[32m+[m
+[32m+[m[32m * Whenever you need to test or publish your changes to topic[m
+[32m+[m[32m   branches, merge them into "next" branch.[m
+[32m+[m
+[32m+[m[32mThe script, being an example, hardcodes the publish branch name[m
+[32m+[m[32mto be "next", but it is trivial to make it configurable via[m
+[32m+[m[32m$GIT_DIR/config mechanism.[m
+[32m+[m
+[32m+[m[32mWith this workflow, you would want to know:[m
+[32m+[m
+[32m+[m[32m(1) ... if a topic branch has ever been merged to "next".  Young[m
+[32m+[m[32m    topic branches can have stupid mistakes you would rather[m
+[32m+[m[32m    clean up before publishing, and things that have not been[m
+[32m+[m[32m    merged into other branches can be easily rebased without[m
+[32m+[m[32m    affecting other people.  But once it is published, you would[m
+[32m+[m[32m    not want to rewind it.[m
+[32m+[m
+[32m+[m[32m(2) ... if a topic branch has been fully merged to "master".[m
+[32m+[m[32m    Then you can delete it.  More importantly, you should not[m
+[32m+[m[32m    build on top of it -- other people may already want to[m
+[32m+[m[32m    change things related to the topic as patches against your[m
+[32m+[m[32m    "master", so if you need further changes, it is better to[m
+[32m+[m[32m    fork the topic (perhaps with the same name) afresh from the[m
+[32m+[m[32m    tip of "master".[m
+[32m+[m
+[32m+[m[32mLet's look at this example:[m
+[32m+[m
+[32m+[m		[32m   o---o---o---o---o---o---o---o---o---o "next"[m
+[32m+[m		[32m  /       /           /           /[m
+[32m+[m		[32m /   a---a---b A     /           /[m
+[32m+[m		[32m/   /               /           /[m
+[32m+[m	[32m       /   /   c---c---c---c B         /[m
+[32m+[m	[32m      /   /   /             \         /[m
+[32m+[m	[32m     /   /   /   b---b C     \       /[m
+[32m+[m	[32m    /   /   /   /             \     /[m
+[32m+[m[32m    ---o---o---o---o---o---o---o---o---o---o---o "master"[m
+[32m+[m
+[32m+[m
+[32m+[m[32mA, B and C are topic branches.[m
+[32m+[m
+[32m+[m[32m * A has one fix since it was merged up to "next".[m
+[32m+[m
+[32m+[m[32m * B has finished.  It has been fully merged up to "master" and "next",[m
+[32m+[m[32m   and is ready to be deleted.[m
+[32m+[m
+[32m+[m[32m * C has not merged to "next" at all.[m
+[32m+[m
+[32m+[m[32mWe would want to allow C to be rebased, refuse A, and encourage[m
+[32m+[m[32mB to be deleted.[m
+[32m+[m
+[32m+[m[32mTo compute (1):[m
+[32m+[m
+[32m+[m	[32mgit rev-list ^master ^topic next[m
+[32m+[m	[32mgit rev-list ^master        next[m
+[32m+[m
+[32m+[m	[32mif these match, topic has not merged in next at all.[m
+[32m+[m
+[32m+[m[32mTo compute (2):[m
+[32m+[m
+[32m+[m	[32mgit rev-list master..topic[m
+[32m+[m
+[32m+[m	[32mif this is empty, it is fully merged to "master".[m
+[32m+[m
+[32m+[m[32mDOC_END[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/pre-receive.sample b/Vehicle_Transmission_Classifier_App.git/hooks/pre-receive.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..a1fd29ec[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/pre-receive.sample[m
+[36m@@ -0,0 +1,24 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to make use of push options.[m
+[32m+[m[32m# The example simply echoes all push options that start with 'echoback='[m
+[32m+[m[32m# and rejects all pushes when the "reject" push option is used.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "pre-receive".[m
+[32m+[m
+[32m+[m[32mif test -n "$GIT_PUSH_OPTION_COUNT"[m
+[32m+[m[32mthen[m
+[32m+[m	[32mi=0[m
+[32m+[m	[32mwhile test "$i" -lt "$GIT_PUSH_OPTION_COUNT"[m
+[32m+[m	[32mdo[m
+[32m+[m		[32meval "value=\$GIT_PUSH_OPTION_$i"[m
+[32m+[m		[32mcase "$value" in[m
+[32m+[m		[32mechoback=*)[m
+[32m+[m			[32mecho "echo from the pre-receive-hook: ${value#*=}" >&2[m
+[32m+[m			[32m;;[m
+[32m+[m		[32mreject)[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mesac[m
+[32m+[m		[32mi=$((i + 1))[m
+[32m+[m	[32mdone[m
+[32m+[m[32mfi[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/prepare-commit-msg.sample b/Vehicle_Transmission_Classifier_App.git/hooks/prepare-commit-msg.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..10fa14c5[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/prepare-commit-msg.sample[m
+[36m@@ -0,0 +1,42 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to prepare the commit log message.[m
+[32m+[m[32m# Called by "git commit" with the name of the file that has the[m
+[32m+[m[32m# commit message, followed by the description of the commit[m
+[32m+[m[32m# message's source.  The hook's purpose is to edit the commit[m
+[32m+[m[32m# message file.  If the hook fails with a non-zero status,[m
+[32m+[m[32m# the commit is aborted.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "prepare-commit-msg".[m
+[32m+[m
+[32m+[m[32m# This hook includes three examples. The first one removes the[m
+[32m+[m[32m# "# Please enter the commit message..." help message.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The second includes the output of "git diff --name-status -r"[m
+[32m+[m[32m# into the message, just before the "git status" output.  It is[m
+[32m+[m[32m# commented because it doesn't cope with --amend or with squashed[m
+[32m+[m[32m# commits.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The third example adds a Signed-off-by line to the message, that can[m
+[32m+[m[32m# still be edited.  This is rarely a good idea.[m
+[32m+[m
+[32m+[m[32mCOMMIT_MSG_FILE=$1[m
+[32m+[m[32mCOMMIT_SOURCE=$2[m
+[32m+[m[32mSHA1=$3[m
+[32m+[m
+[32m+[m[32m/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"[m
+[32m+[m
+[32m+[m[32m# case "$COMMIT_SOURCE,$SHA1" in[m
+[32m+[m[32m#  ,|template,)[m
+[32m+[m[32m#    /usr/bin/perl -i.bak -pe '[m
+[32m+[m[32m#       print "\n" . `git diff --cached --name-status -r`[m
+[32m+[m[32m# 	 if /^#/ && $first++ == 0' "$COMMIT_MSG_FILE" ;;[m
+[32m+[m[32m#  *) ;;[m
+[32m+[m[32m# esac[m
+[32m+[m
+[32m+[m[32m# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')[m
+[32m+[m[32m# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"[m
+[32m+[m[32m# if test -z "$COMMIT_SOURCE"[m
+[32m+[m[32m# then[m
+[32m+[m[32m#   /usr/bin/perl -i.bak -pe 'print "\n" if !$first_line++' "$COMMIT_MSG_FILE"[m
+[32m+[m[32m# fi[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/push-to-checkout.sample b/Vehicle_Transmission_Classifier_App.git/hooks/push-to-checkout.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..af5a0c00[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/push-to-checkout.sample[m
+[36m@@ -0,0 +1,78 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m
+[32m+[m[32m# An example hook script to update a checked-out tree on a git push.[m
+[32m+[m[32m#[m
+[32m+[m[32m# This hook is invoked by git-receive-pack(1) when it reacts to git[m
+[32m+[m[32m# push and updates reference(s) in its repository, and when the push[m
+[32m+[m[32m# tries to update the branch that is currently checked out and the[m
+[32m+[m[32m# receive.denyCurrentBranch configuration variable is set to[m
+[32m+[m[32m# updateInstead.[m
+[32m+[m[32m#[m
+[32m+[m[32m# By default, such a push is refused if the working tree and the index[m
+[32m+[m[32m# of the remote repository has any difference from the currently[m
+[32m+[m[32m# checked out commit; when both the working tree and the index match[m
+[32m+[m[32m# the current commit, they are updated to match the newly pushed tip[m
+[32m+[m[32m# of the branch. This hook is to be used to override the default[m
+[32m+[m[32m# behaviour; however the code below reimplements the default behaviour[m
+[32m+[m[32m# as a starting point for convenient modification.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The hook receives the commit with which the tip of the current[m
+[32m+[m[32m# branch is going to be updated:[m
+[32m+[m[32mcommit=$1[m
+[32m+[m
+[32m+[m[32m# It can exit with a non-zero status to refuse the push (when it does[m
+[32m+[m[32m# so, it must not modify the index or the working tree).[m
+[32m+[m[32mdie () {[m
+[32m+[m	[32mecho >&2 "$*"[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m# Or it can make any necessary changes to the working tree and to the[m
+[32m+[m[32m# index to bring them to the desired state when the tip of the current[m
+[32m+[m[32m# branch is updated to the new commit, and exit with a zero status.[m
+[32m+[m[32m#[m
+[32m+[m[32m# For example, the hook can simply run git read-tree -u -m HEAD "$1"[m
+[32m+[m[32m# in order to emulate git fetch that is run in the reverse direction[m
+[32m+[m[32m# with git push, as the two-tree form of git read-tree -u -m is[m
+[32m+[m[32m# essentially the same as git switch or git checkout that switches[m
+[32m+[m[32m# branches while keeping the local changes in the working tree that do[m
+[32m+[m[32m# not interfere with the difference between the branches.[m
+[32m+[m
+[32m+[m[32m# The below is a more-or-less exact translation to shell of the C code[m
+[32m+[m[32m# for the default behaviour for git's push-to-checkout hook defined in[m
+[32m+[m[32m# the push_to_deploy() function in builtin/receive-pack.c.[m
+[32m+[m[32m#[m
+[32m+[m[32m# Note that the hook will be executed from the repository directory,[m
+[32m+[m[32m# not from the working tree, so if you want to perform operations on[m
+[32m+[m[32m# the working tree, you will have to adapt your code accordingly, e.g.[m
+[32m+[m[32m# by adding "cd .." or using relative paths.[m
+[32m+[m
+[32m+[m[32mif ! git update-index -q --ignore-submodules --refresh[m
+[32m+[m[32mthen[m
+[32m+[m	[32mdie "Up-to-date check failed"[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32mif ! git diff-files --quiet --ignore-submodules --[m
+[32m+[m[32mthen[m
+[32m+[m	[32mdie "Working directory has unstaged changes"[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32m# This is a rough translation of:[m
+[32m+[m[32m#[m
+[32m+[m[32m#   head_has_history() ? "HEAD" : EMPTY_TREE_SHA1_HEX[m
+[32m+[m[32mif git cat-file -e HEAD 2>/dev/null[m
+[32m+[m[32mthen[m
+[32m+[m	[32mhead=HEAD[m
+[32m+[m[32melse[m
+[32m+[m	[32mhead=$(git hash-object -t tree --stdin </dev/null)[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32mif ! git diff-index --quiet --cached --ignore-submodules $head --[m
+[32m+[m[32mthen[m
+[32m+[m	[32mdie "Working directory has staged changes"[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32mif ! git read-tree -u -m "$commit"[m
+[32m+[m[32mthen[m
+[32m+[m	[32mdie "Could not update working tree to new HEAD"[m
+[32m+[m[32mfi[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/sendemail-validate.sample b/Vehicle_Transmission_Classifier_App.git/hooks/sendemail-validate.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..640bcf87[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/sendemail-validate.sample[m
+[36m@@ -0,0 +1,77 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m
+[32m+[m[32m# An example hook script to validate a patch (and/or patch series) before[m
+[32m+[m[32m# sending it via email.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The hook should exit with non-zero status after issuing an appropriate[m
+[32m+[m[32m# message if it wants to prevent the email(s) from being sent.[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "sendemail-validate".[m
+[32m+[m[32m#[m
+[32m+[m[32m# By default, it will only check that the patch(es) can be applied on top of[m
+[32m+[m[32m# the default upstream branch without conflicts in a secondary worktree. After[m
+[32m+[m[32m# validation (successful or not) of the last patch of a series, the worktree[m
+[32m+[m[32m# will be deleted.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The following config variables can be set to change the default remote and[m
+[32m+[m[32m# remote ref that are used to apply the patches against:[m
+[32m+[m[32m#[m
+[32m+[m[32m#   sendemail.validateRemote (default: origin)[m
+[32m+[m[32m#   sendemail.validateRemoteRef (default: HEAD)[m
+[32m+[m[32m#[m
+[32m+[m[32m# Replace the TODO placeholders with appropriate checks according to your[m
+[32m+[m[32m# needs.[m
+[32m+[m
+[32m+[m[32mvalidate_cover_letter () {[m
+[32m+[m	[32mfile="$1"[m
+[32m+[m	[32m# TODO: Replace with appropriate checks (e.g. spell checking).[m
+[32m+[m	[32mtrue[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mvalidate_patch () {[m
+[32m+[m	[32mfile="$1"[m
+[32m+[m	[32m# Ensure that the patch applies without conflicts.[m
+[32m+[m	[32mgit am -3 "$file" || return[m
+[32m+[m	[32m# TODO: Replace with appropriate checks for this patch[m
+[32m+[m	[32m# (e.g. checkpatch.pl).[m
+[32m+[m	[32mtrue[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mvalidate_series () {[m
+[32m+[m	[32m# TODO: Replace with appropriate checks for the whole series[m
+[32m+[m	[32m# (e.g. quick build, coding style checks, etc.).[m
+[32m+[m	[32mtrue[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m# main -------------------------------------------------------------------------[m
+[32m+[m
+[32m+[m[32mif test "$GIT_SENDEMAIL_FILE_COUNTER" = 1[m
+[32m+[m[32mthen[m
+[32m+[m	[32mremote=$(git config --default origin --get sendemail.validateRemote) &&[m
+[32m+[m	[32mref=$(git config --default HEAD --get sendemail.validateRemoteRef) &&[m
+[32m+[m	[32mworktree=$(mktemp --tmpdir -d sendemail-validate.XXXXXXX) &&[m
+[32m+[m	[32mgit worktree add -fd --checkout "$worktree" "refs/remotes/$remote/$ref" &&[m
+[32m+[m	[32mgit config --replace-all sendemail.validateWorktree "$worktree"[m
+[32m+[m[32melse[m
+[32m+[m	[32mworktree=$(git config --get sendemail.validateWorktree)[m
+[32m+[m[32mfi || {[m
+[32m+[m	[32mecho "sendemail-validate: error: failed to prepare worktree" >&2[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32munset GIT_DIR GIT_WORK_TREE[m
+[32m+[m[32mcd "$worktree" &&[m
+[32m+[m
+[32m+[m[32mif grep -q "^diff --git " "$1"[m
+[32m+[m[32mthen[m
+[32m+[m	[32mvalidate_patch "$1"[m
+[32m+[m[32melse[m
+[32m+[m	[32mvalidate_cover_letter "$1"[m
+[32m+[m[32mfi &&[m
+[32m+[m
+[32m+[m[32mif test "$GIT_SENDEMAIL_FILE_COUNTER" = "$GIT_SENDEMAIL_FILE_TOTAL"[m
+[32m+[m[32mthen[m
+[32m+[m	[32mgit config --unset-all sendemail.validateWorktree &&[m
+[32m+[m	[32mtrap 'git worktree remove -ff "$worktree"' EXIT &&[m
+[32m+[m	[32mvalidate_series[m
+[32m+[m[32mfi[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/hooks/update.sample b/Vehicle_Transmission_Classifier_App.git/hooks/update.sample[m
+[1mnew file mode 100755[m
+[1mindex 00000000..c4d426bc[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/hooks/update.sample[m
+[36m@@ -0,0 +1,128 @@[m
+[32m+[m[32m#!/bin/sh[m
+[32m+[m[32m#[m
+[32m+[m[32m# An example hook script to block unannotated tags from entering.[m
+[32m+[m[32m# Called by "git receive-pack" with arguments: refname sha1-old sha1-new[m
+[32m+[m[32m#[m
+[32m+[m[32m# To enable this hook, rename this file to "update".[m
+[32m+[m[32m#[m
+[32m+[m[32m# Config[m
+[32m+[m[32m# ------[m
+[32m+[m[32m# hooks.allowunannotated[m
+[32m+[m[32m#   This boolean sets whether unannotated tags will be allowed into the[m
+[32m+[m[32m#   repository.  By default they won't be.[m
+[32m+[m[32m# hooks.allowdeletetag[m
+[32m+[m[32m#   This boolean sets whether deleting tags will be allowed in the[m
+[32m+[m[32m#   repository.  By default they won't be.[m
+[32m+[m[32m# hooks.allowmodifytag[m
+[32m+[m[32m#   This boolean sets whether a tag may be modified after creation. By default[m
+[32m+[m[32m#   it won't be.[m
+[32m+[m[32m# hooks.allowdeletebranch[m
+[32m+[m[32m#   This boolean sets whether deleting branches will be allowed in the[m
+[32m+[m[32m#   repository.  By default they won't be.[m
+[32m+[m[32m# hooks.denycreatebranch[m
+[32m+[m[32m#   This boolean sets whether remotely creating branches will be denied[m
+[32m+[m[32m#   in the repository.  By default this is allowed.[m
+[32m+[m[32m#[m
+[32m+[m
+[32m+[m[32m# --- Command line[m
+[32m+[m[32mrefname="$1"[m
+[32m+[m[32moldrev="$2"[m
+[32m+[m[32mnewrev="$3"[m
+[32m+[m
+[32m+[m[32m# --- Safety check[m
+[32m+[m[32mif [ -z "$GIT_DIR" ]; then[m
+[32m+[m	[32mecho "Don't run this script from the command line." >&2[m
+[32m+[m	[32mecho " (if you want, you could supply GIT_DIR then run" >&2[m
+[32m+[m	[32mecho "  $0 <ref> <oldrev> <newrev>)" >&2[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32mif [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then[m
+[32m+[m	[32mecho "usage: $0 <ref> <oldrev> <newrev>" >&2[m
+[32m+[m	[32mexit 1[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32m# --- Config[m
+[32m+[m[32mallowunannotated=$(git config --type=bool hooks.allowunannotated)[m
+[32m+[m[32mallowdeletebranch=$(git config --type=bool hooks.allowdeletebranch)[m
+[32m+[m[32mdenycreatebranch=$(git config --type=bool hooks.denycreatebranch)[m
+[32m+[m[32mallowdeletetag=$(git config --type=bool hooks.allowdeletetag)[m
+[32m+[m[32mallowmodifytag=$(git config --type=bool hooks.allowmodifytag)[m
+[32m+[m
+[32m+[m[32m# check for no description[m
+[32m+[m[32mprojectdesc=$(sed -e '1q' "$GIT_DIR/description")[m
+[32m+[m[32mcase "$projectdesc" in[m
+[32m+[m[32m"Unnamed repository"* | "")[m
+[32m+[m	[32mecho "*** Project description file hasn't been set" >&2[m
+[32m+[m	[32mexit 1[m
+[32m+[m	[32m;;[m
+[32m+[m[32mesac[m
+[32m+[m
+[32m+[m[32m# --- Check types[m
+[32m+[m[32m# if $newrev is 0000...0000, it's a commit to delete a ref.[m
+[32m+[m[32mzero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')[m
+[32m+[m[32mif [ "$newrev" = "$zero" ]; then[m
+[32m+[m	[32mnewrev_type=delete[m
+[32m+[m[32melse[m
+[32m+[m	[32mnewrev_type=$(git cat-file -t $newrev)[m
+[32m+[m[32mfi[m
+[32m+[m
+[32m+[m[32mcase "$refname","$newrev_type" in[m
+[32m+[m	[32mrefs/tags/*,commit)[m
+[32m+[m		[32m# un-annotated tag[m
+[32m+[m		[32mshort_refname=${refname##refs/tags/}[m
+[32m+[m		[32mif [ "$allowunannotated" != "true" ]; then[m
+[32m+[m			[32mecho "*** The un-annotated tag, $short_refname, is not allowed in this repository" >&2[m
+[32m+[m			[32mecho "*** Use 'git tag [ -a | -s ]' for tags you want to propagate." >&2[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mfi[m
+[32m+[m		[32m;;[m
+[32m+[m	[32mrefs/tags/*,delete)[m
+[32m+[m		[32m# delete tag[m
+[32m+[m		[32mif [ "$allowdeletetag" != "true" ]; then[m
+[32m+[m			[32mecho "*** Deleting a tag is not allowed in this repository" >&2[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mfi[m
+[32m+[m		[32m;;[m
+[32m+[m	[32mrefs/tags/*,tag)[m
+[32m+[m		[32m# annotated tag[m
+[32m+[m		[32mif [ "$allowmodifytag" != "true" ] && git rev-parse $refname > /dev/null 2>&1[m
+[32m+[m		[32mthen[m
+[32m+[m			[32mecho "*** Tag '$refname' already exists." >&2[m
+[32m+[m			[32mecho "*** Modifying a tag is not allowed in this repository." >&2[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mfi[m
+[32m+[m		[32m;;[m
+[32m+[m	[32mrefs/heads/*,commit)[m
+[32m+[m		[32m# branch[m
+[32m+[m		[32mif [ "$oldrev" = "$zero" -a "$denycreatebranch" = "true" ]; then[m
+[32m+[m			[32mecho "*** Creating a branch is not allowed in this repository" >&2[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mfi[m
+[32m+[m		[32m;;[m
+[32m+[m	[32mrefs/heads/*,delete)[m
+[32m+[m		[32m# delete branch[m
+[32m+[m		[32mif [ "$allowdeletebranch" != "true" ]; then[m
+[32m+[m			[32mecho "*** Deleting a branch is not allowed in this repository" >&2[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mfi[m
+[32m+[m		[32m;;[m
+[32m+[m	[32mrefs/remotes/*,commit)[m
+[32m+[m		[32m# tracking branch[m
+[32m+[m		[32m;;[m
+[32m+[m	[32mrefs/remotes/*,delete)[m
+[32m+[m		[32m# delete tracking branch[m
+[32m+[m		[32mif [ "$allowdeletebranch" != "true" ]; then[m
+[32m+[m			[32mecho "*** Deleting a tracking branch is not allowed in this repository" >&2[m
+[32m+[m			[32mexit 1[m
+[32m+[m		[32mfi[m
+[32m+[m		[32m;;[m
+[32m+[m	[32m*)[m
+[32m+[m		[32m# Anything else (is there anything else?)[m
+[32m+[m		[32mecho "*** Update hook: unknown type of update to ref $refname of type $newrev_type" >&2[m
+[32m+[m		[32mexit 1[m
+[32m+[m		[32m;;[m
+[32m+[m[32mesac[m
+[32m+[m
+[32m+[m[32m# --- Finished[m
+[32m+[m[32mexit 0[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/info/exclude b/Vehicle_Transmission_Classifier_App.git/info/exclude[m
+[1mnew file mode 100644[m
+[1mindex 00000000..a5196d1b[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/info/exclude[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m[32m# git ls-files --others --exclude-from=.git/info/exclude[m
+[32m+[m[32m# Lines that start with '#' are comments.[m
+[32m+[m[32m# For a project mostly in C, the following would be a good set of[m
+[32m+[m[32m# exclude patterns (uncomment them if you want to use them):[m
+[32m+[m[32m# *.[oa][m
+[32m+[m[32m# *~[m
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.idx b/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.idx[m
+[1mnew file mode 100644[m
+[1mindex 00000000..c2f246a4[m
+Binary files /dev/null and b/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.idx differ
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.pack b/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.pack[m
+[1mnew file mode 100644[m
+[1mindex 00000000..f7bde14f[m
+Binary files /dev/null and b/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.pack differ
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.rev b/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.rev[m
+[1mnew file mode 100644[m
+[1mindex 00000000..cb8437b4[m
+Binary files /dev/null and b/Vehicle_Transmission_Classifier_App.git/objects/pack/pack-0e10cb9d5ea8d96513ac5d679d84b13f022df62e.rev differ
+[1mdiff --git a/Vehicle_Transmission_Classifier_App.git/packed-refs b/Vehicle_Transmission_Classifier_App.git/packed-refs[m
+[1mnew file mode 100644[m
+[1mindex 00000000..d37cd062[m
+[1m--- /dev/null[m
+[1m+++ b/Vehicle_Transmission_Classifier_App.git/packed-refs[m
+[36m@@ -0,0 +1,2 @@[m
+[32m+[m[32m# pack-refs with: peeled fully-peeled sorted[m[41m [m
+[32m+[m[32m735bd72087532d7d76cb7cbdcb19ae03fe75be4b refs/heads/main[m

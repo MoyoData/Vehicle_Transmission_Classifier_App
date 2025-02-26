@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/bddc0b96e91745efbc99626e8306c65b/artifacts
+end_time: 1740435336725
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: bddc0b96e91745efbc99626e8306c65b
+run_name: victorious-mare-109
+run_uuid: bddc0b96e91745efbc99626e8306c65b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740434921176
+status: 3
+tags: []
+user_id: moyo

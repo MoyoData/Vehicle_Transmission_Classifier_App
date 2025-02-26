@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/d07d18450fbf477abcea1f84e7c9a3fe/artifacts
+end_time: 1740435336725
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: d07d18450fbf477abcea1f84e7c9a3fe
+run_name: resilient-jay-969
+run_uuid: d07d18450fbf477abcea1f84e7c9a3fe
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740434921176
+status: 3
+tags: []
+user_id: moyo
