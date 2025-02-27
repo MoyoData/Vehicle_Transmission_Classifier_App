@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/8e4f18d7dede45c8a5fadb5f54b4c329/artifacts
+end_time: 1740628932339
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8e4f18d7dede45c8a5fadb5f54b4c329
+run_name: classification_[100]_default
+run_uuid: 8e4f18d7dede45c8a5fadb5f54b4c329
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740628847160
+status: 3
+tags: []
+user_id: moyo

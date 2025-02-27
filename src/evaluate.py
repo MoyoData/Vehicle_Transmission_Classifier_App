@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     # Load and prepare data
     evaluator.load_processed_data()
-    evaluator.split_data(target_column='transmission_from_vin')  # Assuming 'transmission_from_vin' is the target column
+    evaluator.split_data(target_column='transmission_from_vin')  
 
     # Load the trained model from MLflow
     evaluator.load_model()

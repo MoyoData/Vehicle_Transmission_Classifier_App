@@ -5,6 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 import joblib  # For saving model
 import mlflow
 import mlflow.sklearn
+import numpy as np
 
 class DataPredictor:
     def __init__(self, file_path):
@@ -97,7 +98,11 @@ class DataPredictor:
                     mlflow.log_param(param, value)
 
             # Log the model
-            mlflow.sklearn.log_model(self.model, "random_forest_model")
+            #mlflow.sklearn.log_model(self.model, "random_forest_model")
+            
+            input_example = np.array(self.X_train.iloc[0]).reshape(1, -1)
+            mlflow.sklearn.log_model(self.model, "random_forest_model", input_example=input_example)
+
 
             # Log metrics like accuracy
             accuracy = self.model.score(self.X_test, self.y_test)
@@ -116,13 +121,20 @@ if __name__ == "__main__":
     predictor.load_processed_data()
 
     # Split the data
-    predictor.split_data(target_column='transmission_from_vin')  # Assuming 'transmission_from_vin' is the target column
+    predictor.split_data(target_column='transmission_from_vin')  
 
     # Train the model
     predictor.train_model()
 
     # Log MLflow tracking
-    predictor.log_mlflow(target_column='transmission_from_vin', model_params={"n_estimators": 100, "random_state": 42})
+    predictor.log_mlflow(target_column='transmission_from_vin', model_params=({
+            'n_estimators': [150, 550, 500],
+            'max_depth': [None, 5, 2],
+            'min_samples_split': [2, 5],
+            'min_samples_leaf': [1, 2],
+            'bootstrap': [True, False],
+            'max_features': ['log2', 'sqrt', None]
+        }))
 
     # Save model and predictions
     predictor.save_model("random_forest_model.pkl")

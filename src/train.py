@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 import joblib
 from sklearn.preprocessing import LabelEncoder
 import logging
-
+import numpy as np
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -130,6 +130,7 @@ if __name__ == "__main__":
     # Start an MLflow run to track the experiment
     run_name = f"classification_{config.get('model_params', {}).get('n_estimators', 'default')}_{training_compute}"
     with mlflow.start_run(run_name=run_name) as run:
+        
         logging.info(f"Starting MLflow run: {run.info.run_id} with run name: {run_name}")
 
         # Dynamically generate model_save_path using the run ID inside the MLflow context
@@ -155,22 +156,12 @@ if __name__ == "__main__":
         })
         model = trainer.train_model(X_train, y_train, param_grid)
 
-        # Evaluate and log model accuracy
-        accuracy, y_pred = trainer.evaluate_model(X_test, y_test)
-        if accuracy:
-            mlflow.log_metric("accuracy", accuracy)
 
-        # Calculate and log additional performance metrics
-        f1 = f1_score(y_test, y_pred)
-        precision = precision_score(y_test, y_pred)
-        recall = recall_score(y_test, y_pred)
+        # Create an input example using a single row from the training data
+        input_example = X_train.iloc[:1]
 
-        mlflow.log_metric("f1_score", f1)
-        mlflow.log_metric("precision", precision)
-        mlflow.log_metric("recall", recall)
-
-        # Log the trained model in MLflow
-        mlflow.sklearn.log_model(model, artifact_path="model")
+        # Log the trained model in MLflow with input example
+        mlflow.sklearn.log_model(model, "random_forest_model", input_example=input_example)
 
         # Save the model locally
         trainer.save_model(model_save_path)

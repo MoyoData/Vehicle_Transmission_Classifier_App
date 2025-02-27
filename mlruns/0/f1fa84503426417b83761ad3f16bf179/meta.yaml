@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/f1fa84503426417b83761ad3f16bf179/artifacts
+end_time: 1740627834495
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f1fa84503426417b83761ad3f16bf179
+run_name: zealous-shoat-423
+run_uuid: f1fa84503426417b83761ad3f16bf179
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740627830959
+status: 3
+tags: []
+user_id: moyo

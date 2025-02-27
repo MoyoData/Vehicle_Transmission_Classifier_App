@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/7bd8507a540c495e81b306a1cfeb8a62/artifacts
+end_time: 1740629961669
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7bd8507a540c495e81b306a1cfeb8a62
+run_name: victorious-grub-537
+run_uuid: 7bd8507a540c495e81b306a1cfeb8a62
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740629836557
+status: 3
+tags: []
+user_id: moyo

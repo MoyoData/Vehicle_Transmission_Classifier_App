@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/24ff5158b0174cdcbb9fd92bbffefcac/artifacts
+end_time: 1740629961669
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 24ff5158b0174cdcbb9fd92bbffefcac
+run_name: rare-koi-591
+run_uuid: 24ff5158b0174cdcbb9fd92bbffefcac
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740629836557
+status: 3
+tags: []
+user_id: moyo

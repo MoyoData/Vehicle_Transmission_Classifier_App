@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/4aafbe1a98af48b1936dd6f636486d2a/artifacts
+end_time: 1740628296414
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 4aafbe1a98af48b1936dd6f636486d2a
+run_name: magnificent-fish-40
+run_uuid: 4aafbe1a98af48b1936dd6f636486d2a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740628191204
+status: 3
+tags: []
+user_id: moyo

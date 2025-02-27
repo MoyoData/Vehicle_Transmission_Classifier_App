@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/f005e6d229714b958ff65496b6744735/artifacts
+end_time: 1740629961669
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f005e6d229714b958ff65496b6744735
+run_name: intelligent-ape-955
+run_uuid: f005e6d229714b958ff65496b6744735
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740629836557
+status: 3
+tags: []
+user_id: moyo

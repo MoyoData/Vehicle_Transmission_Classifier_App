@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/2a27c2e6d6244115854e1cc44e4f3bc0/artifacts
+end_time: 1740628927773
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2a27c2e6d6244115854e1cc44e4f3bc0
+run_name: capricious-fish-478
+run_uuid: 2a27c2e6d6244115854e1cc44e4f3bc0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740628847160
+status: 3
+tags: []
+user_id: moyo

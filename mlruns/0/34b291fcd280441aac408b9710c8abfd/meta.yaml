@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/34b291fcd280441aac408b9710c8abfd/artifacts
+end_time: 1740628665861
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 34b291fcd280441aac408b9710c8abfd
+run_name: orderly-swan-322
+run_uuid: 34b291fcd280441aac408b9710c8abfd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740628585326
+status: 3
+tags: []
+user_id: moyo

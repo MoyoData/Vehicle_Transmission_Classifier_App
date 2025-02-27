@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/3dbb9fd2eda94946b46e79ca1494417c/artifacts
+end_time: 1740634507165
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 3dbb9fd2eda94946b46e79ca1494417c
+run_name: fearless-ram-228
+run_uuid: 3dbb9fd2eda94946b46e79ca1494417c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740634147027
+status: 3
+tags: []
+user_id: moyo
