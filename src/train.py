@@ -130,7 +130,7 @@ if __name__ == "__main__":
     # Start an MLflow run to track the experiment
     run_name = f"classification_{config.get('model_params', {}).get('n_estimators', 'default')}_{training_compute}"
     with mlflow.start_run(run_name=run_name) as run:
-        
+
         logging.info(f"Starting MLflow run: {run.info.run_id} with run name: {run_name}")
 
         # Dynamically generate model_save_path using the run ID inside the MLflow context
@@ -147,13 +147,14 @@ if __name__ == "__main__":
 
         # Train model with hyperparameter tuning
         param_grid = config.get("model_params", {
-            'n_estimators': [150, 550, 500],
-            'max_depth': [None, 5, 2],
+            'n_estimators': [100, 150, 200],
+            'max_depth': [None, 10, 20],
             'min_samples_split': [2, 5],
             'min_samples_leaf': [1, 2],
             'bootstrap': [True, False],
             'max_features': ['log2', 'sqrt', None]
         })
+        
         model = trainer.train_model(X_train, y_train, param_grid)
 
 

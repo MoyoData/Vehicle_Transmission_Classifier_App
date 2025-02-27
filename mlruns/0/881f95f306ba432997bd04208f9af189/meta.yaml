@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/881f95f306ba432997bd04208f9af189/artifacts
+end_time: 1740635889380
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 881f95f306ba432997bd04208f9af189
+run_name: exultant-turtle-978
+run_uuid: 881f95f306ba432997bd04208f9af189
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740635492583
+status: 3
+tags: []
+user_id: moyo

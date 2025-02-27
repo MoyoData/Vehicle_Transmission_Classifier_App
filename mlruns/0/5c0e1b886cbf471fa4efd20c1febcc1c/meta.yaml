@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/5c0e1b886cbf471fa4efd20c1febcc1c/artifacts
+end_time: 1740635889380
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5c0e1b886cbf471fa4efd20c1febcc1c
+run_name: abundant-bee-900
+run_uuid: 5c0e1b886cbf471fa4efd20c1febcc1c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740635492583
+status: 3
+tags: []
+user_id: moyo

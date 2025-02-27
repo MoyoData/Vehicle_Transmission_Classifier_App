@@ -1,0 +1,33 @@
+artifact_path: best_estimator
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.16
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 2.20.2
+model_size_bytes: 36679262
+model_uuid: c8eefbeb3eb34f0c8e466d4bc31a5619
+run_id: 7064dc1fab0a4b3eb76ce16d162c2eb3
+signature:
+  inputs: '[{"type": "long", "name": "dealer_type", "required": true}, {"type": "long",
+    "name": "stock_type", "required": true}, {"type": "double", "name": "mileage",
+    "required": true}, {"type": "double", "name": "price", "required": true}, {"type":
+    "double", "name": "model_year", "required": true}, {"type": "long", "name": "make",
+    "required": true}, {"type": "long", "name": "model", "required": true}, {"type":
+    "double", "name": "certified", "required": true}, {"type": "long", "name": "fuel_type_from_vin",
+    "required": true}, {"type": "double", "name": "number_price_changes", "required":
+    true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-02-27 06:36:00.115013'
