@@ -98,8 +98,6 @@ class DataPredictor:
                     mlflow.log_param(param, value)
 
             # Log the model
-            #mlflow.sklearn.log_model(self.model, "random_forest_model")
-            
             input_example = np.array(self.X_train.iloc[0]).reshape(1, -1)
             mlflow.sklearn.log_model(self.model, "random_forest_model", input_example=input_example)
 
