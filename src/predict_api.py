@@ -15,8 +15,8 @@ app = Flask(__name__)
 
 
 # Load models 
-model_v1 = joblib.load('/home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/models/random_forest_model.pkl')
-model_v2 = joblib.load('/home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/models/random_forest_model.pkl')
+model_v1 = joblib.load('/home/chiomau/Vehicle_Transmission_Classifier_App-2/models/random_forest_model.pkl')
+model_v2 = joblib.load('/home/chiomau/Vehicle_Transmission_Classifier_App-2/models/random_forest_model.pkl')
 
 # Home Endpoint
 @app.route('/vehicle_transmission_home')
