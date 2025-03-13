@@ -1,80 +1,128 @@
-
+import os
+import json
+from flask import Flask, request, jsonify
+import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
-import joblib  
-import mlflow
-import mlflow.sklearn
-import numpy as np
-from flask import Flask, request, jsonify
-import joblib
-import os
-
 
 app = Flask(__name__)
-
-# Dynamically get the absolute project root
+# Project root
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
-# Construct absolute paths for models
-model_v1_path = os.path.join(PROJECT_ROOT, "models", "random_forest_model.pkl")
-model_v2_path = os.path.join(PROJECT_ROOT, "models", "random_forest_model.pkl")
-
-# Load models
-model_v1 = joblib.load(model_v1_path)
-model_v2 = joblib.load(model_v2_path)
+# Define paths for models (ensure these paths are correct)
+MODEL_PATH_1 = os.path.join("models", "vehicle_transmission_model_62ce78f65aaa4384866e78f4f68763ca.pkl")
+MODEL_PATH_2 = os.path.join("models", "vehicle_transmission_model_7064dc1fab0a4b3eb76ce16d162c2eb3.pkl")
 
 
-@app.route("/Vehicle_Transmission_Classifier", methods = ['GET'])
+class DataPredictor:
+    def __init__(self):
+        self.model = None
+
+    def load_model(self, model_path):
+        """Load a model from a file."""
+        self.model = joblib.load(model_path)
+
+    def predict(self, features):
+        """Make predictions using the loaded model."""
+        if self.model is None:
+            raise ValueError("Model not loaded.")
+        return self.model.predict([features])
+
+
+@app.route('/Vehicle_Transmission_Classifier_API', methods=['GET'])
 def home():
-    return jsonify({
-        'message': 'Welcome to Vehicle transmission classifier ML Prediction API!',
-        'endpoints': {
-            '/v1/predict': 'Predict using model v1',
-            '/v2/predict': 'Predict using model v2',
-            '/health_status': 'Check API health status',
-            '/Vehicle_Transmission_Classifier_home': 'Information about how to use the API'
+    """Home Endpoint: Description of API and expected JSON format."""
+    info = {
+        "name": "Vehicle Transmission Classifier API",
+        "description": "This API allows making predictions using pre-trained machine learning models to classify the transmission type of vehicles. You can use two models to predict whether a vehicle has an automatic or manual transmission based on various input features.",
+        "version": "v1.0",
+        "endpoints": {
+            "/Vehicle_Transmission_Classifier_API'": "Home Page",
+            "/helth_status": "Health Check",
+            "/v1/predict1": "Prediction using Model 1",
+            "/v2/predict1": "Prediction using Model 2"
+        },
+        "input_format": {
+            "features": "List of features for prediction  [dealer_type, stock_type, mileage, price, model_year, make, model, certified, fuel_type_from_vin, number_price_changes]",
+            "example_request": {
+                "features": ["I", "Used", 15000, 23000, 2018, "Toyota", "Corolla", "Yes", "Gasoline", 2]
+            }
+        },
+        "example_response": {
+            "success": True,
+            "prediction": [1]
         }
-    })
+    }
+    return jsonify(info)
 
-@app.route('/health_status', methods = ['GET'])
+
+@app.route('/health_status', methods=['GET'])
 def health_status():
-    return jsonify({'status': 'API is live and running'})
+    """Health Endpoint: Check if the API is up and ready."""
+    health = {
+        "status": "UP",
+        "message": "The Vehicle Transmission Classifier API is available and ready to receive requests."
+    }
+    return jsonify(health)
 
-@app.route('/v1/predict', methods=['POST'])
+
+@app.route('/v1/predict1', methods=['POST'])
 def predict_v1():
+    """Prediction Endpoint v1: Using Model 1."""
     data = request.get_json()
-    
-    # Check if data is valid
-    if not data:
-        return jsonify({'error': 'No data provided'}), 400
 
+    if 'features' not in data:
+        return jsonify({"error": "Missing required field: features"}), 400
+
+    features = data['features']
+
+    # Initialize predictor and load the model
+    predictor = DataPredictor()
+    predictor.load_model(MODEL_PATH_1)
+
+    # Make prediction
     try:
-        # Assuming the data matches the features the model expects
-        input_features = np.array([data['features']])
-        prediction = model_v1.predict(input_features)
-        return jsonify({'prediction': prediction[0]})
-    
+        prediction = predictor.predict(features)
+        return jsonify({
+            "success": True,
+            "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
+        })
     except Exception as e:
-        return jsonify({'error': f'Error making prediction: {str(e)}'}), 400
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 
-@app.route('/v2/predict', methods=['POST'])
+
+@app.route('/v2/predict1', methods=['POST'])
 def predict_v2():
+    """Prediction Endpoint v2: Using Model 2."""
     data = request.get_json()
-    
-    # Check if data is valid
-    if not data:
-        return jsonify({'error': 'No data provided'}), 400
 
+    if 'features' not in data:
+        return jsonify({"error": "Missing required field: features"}), 400
+
+    features = data['features']
+
+    # Initialize predictor and load the model
+    predictor = DataPredictor()
+    predictor.load_model(MODEL_PATH_2)
+
+    # Make prediction
     try:
-        # Assuming the data matches the features the model expects
-        input_features = np.array([data['features']])
-        prediction = model_v2.predict(input_features)
-        return jsonify({'prediction': prediction[0]})
-    
+        prediction = predictor.predict(features)
+        return jsonify({
+            "success": True,
+            "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
+        })
     except Exception as e:
-        return jsonify({'error': f'Error making prediction: {str(e)}'}), 400
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=True)

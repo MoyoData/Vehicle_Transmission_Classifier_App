@@ -98,10 +98,18 @@ class ModelTrainer:
 
         return accuracy, y_pred
 
-    def save_model(self, model_path):
-        """Saves the trained model to a file."""
+
+
+    def save_model(self, model_name="vehicle_transmission_model.pkl"):
+        """Saves the trained model in the 'models' folder."""
+        models_dir = os.path.join(os.path.dirname(__file__), "models")
+        os.makedirs(models_dir, exist_ok=True)  # Ensure the directory exists
+
+        model_path = os.path.join(models_dir, model_name)
         joblib.dump(self.model, model_path)
         logging.info(f"Model saved to {model_path}")
+
+        return model_path
 
 if __name__ == "__main__":
     project_root = os.path.abspath(os.path.dirname(__file__))  # Get the current script's directory
@@ -165,6 +173,7 @@ if __name__ == "__main__":
         mlflow.sklearn.log_model(model, "random_forest_model", input_example=input_example)
 
         # Save the model locally
-        trainer.save_model(model_save_path)
+        model_save_path = trainer.save_model()
+
 
         logging.info(f"MLflow Run ID: {run.info.run_id}")

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/cdc0a045baa14f42bb975171b6b2d864/artifacts
+end_time: 1741834964530
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cdc0a045baa14f42bb975171b6b2d864
+run_name: dazzling-mole-35
+run_uuid: cdc0a045baa14f42bb975171b6b2d864
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741834643700
+status: 3
+tags: []
+user_id: moyo
