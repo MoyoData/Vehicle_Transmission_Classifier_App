@@ -9,97 +9,72 @@ import mlflow.sklearn
 import numpy as np
 from flask import Flask, request, jsonify
 import joblib
+import os
+
 
 app = Flask(__name__)
 
+# Dynamically get the absolute project root
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+
+# Construct absolute paths for models
+model_v1_path = os.path.join(PROJECT_ROOT, "models", "random_forest_model.pkl")
+model_v2_path = os.path.join(PROJECT_ROOT, "models", "random_forest_model.pkl")
+
+# Load models
+model_v1 = joblib.load(model_v1_path)
+model_v2 = joblib.load(model_v2_path)
 
 
-# Load models 
-model_v1 = joblib.load('/home/chiomau/Vehicle_Transmission_Classifier_App-2/models/random_forest_model.pkl')
-model_v2 = joblib.load('/home/chiomau/Vehicle_Transmission_Classifier_App-2/models/random_forest_model.pkl')
-
-# Home Endpoint
-@app.route('/vehicle_transmission_home')
+@app.route("/Vehicle_Transmission_Classifier", methods = ['GET'])
 def home():
     return jsonify({
-        "message": "Welcome to the Vehicle Transmission Classifier API",
-        "description": "This API predicts the transmission type of a vehicle based on its features like year, make, model, mileage, and price.",
-        "v1_predict_example": {
-            "year": 2020,
-            "make": "Toyota",
-            "model": "Camry",
-            "mileage": 50000,
-            "price": 25000
-        },
-        "v2_predict_example": {
-            "year": 2021,
-            "make": "Honda",
-            "model": "Civic",
-            "mileage": 30000,
-            "price": 22000
+        'message': 'Welcome to Vehicle transmission classifier ML Prediction API!',
+        'endpoints': {
+            '/v1/predict': 'Predict using model v1',
+            '/v2/predict': 'Predict using model v2',
+            '/health_status': 'Check API health status',
+            '/Vehicle_Transmission_Classifier_home': 'Information about how to use the API'
         }
     })
 
-# Health Endpoint
-@app.route('/health_status')
+@app.route('/health_status', methods = ['GET'])
 def health_status():
-    return jsonify({"status": "API is running and ready!"})
+    return jsonify({'status': 'API is live and running'})
 
-# Predict Endpoint v1
-@app.route('/v1/predict1', methods=['POST'])
+@app.route('/v1/predict', methods=['POST'])
 def predict_v1():
+    data = request.get_json()
+    
+    # Check if data is valid
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
     try:
-        # Get the JSON data from the request
-        data = request.get_json()
-        
-        # Validate required fields in the payload
-        if not all(key in data for key in ["year", "make", "model", "mileage", "price"]):
-            return jsonify({"error": "Missing required fields in the payload"}), 400
-        
-        # Extract features
-        year = data["year"]
-        make = data["make"]
-        model = data["model"]
-        mileage = data["mileage"]
-        price = data["price"]
-        
-        # Predict using the model
-        prediction = model_v1.predict([[year, make, model, mileage, price]])
-        
-        # Return the prediction
-        return jsonify({"prediction": prediction[0], "message": "Prediction from model v1"})
+        # Assuming the data matches the features the model expects
+        input_features = np.array([data['features']])
+        prediction = model_v1.predict(input_features)
+        return jsonify({'prediction': prediction[0]})
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({'error': f'Error making prediction: {str(e)}'}), 400
 
-# Predict Endpoint v2
-@app.route('/v2/predict1', methods=['POST'])
+@app.route('/v2/predict', methods=['POST'])
 def predict_v2():
+    data = request.get_json()
+    
+    # Check if data is valid
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
     try:
-        # Get the JSON data from the request
-        data = request.get_json()
-        
-        # Validate required fields in the payload
-        if not all(key in data for key in ["year", "make", "model", "mileage", "price"]):
-            return jsonify({"error": "Missing required fields in the payload"}), 400
-        
-        # Extract features
-        year = data["year"]
-        make = data["make"]
-        model = data["model"]
-        mileage = data["mileage"]
-        price = data["price"]
-        
-        # Predict using the second model
-        prediction = model_v2.predict([[year, make, model, mileage, price]])
-        
-        # Return the prediction
-        return jsonify({"prediction": prediction[0], "message": "Prediction from model v2"})
+        # Assuming the data matches the features the model expects
+        input_features = np.array([data['features']])
+        prediction = model_v2.predict(input_features)
+        return jsonify({'prediction': prediction[0]})
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({'error': f'Error making prediction: {str(e)}'}), 400
 
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
-
+if __name__ == "__main__":
+    app.run(debug=True)
