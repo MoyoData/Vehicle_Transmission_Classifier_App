@@ -11,7 +11,6 @@ app = Flask(__name__)
 # Project root
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
-# Define paths for models (ensure these paths are correct)
 MODEL_PATH_1 = os.path.join("models", "vehicle_transmission_model_62ce78f65aaa4384866e78f4f68763ca.pkl")
 MODEL_PATH_2 = os.path.join("models", "vehicle_transmission_model_7064dc1fab0a4b3eb76ce16d162c2eb3.pkl")
 
@@ -40,7 +39,7 @@ def home():
         "version": "v1.0",
         "endpoints": {
             "/Vehicle_Transmission_Classifier_API'": "Home Page",
-            "/helth_status": "Health Check",
+            "/health_status": "Health Check",
             "/v1/predict1": "Prediction using Model 1",
             "/v2/predict1": "Prediction using Model 2"
         },
@@ -68,37 +67,48 @@ def health_status():
     return jsonify(health)
 
 
-@app.route('/v1/predict1', methods=['POST'])
+from flask import Flask, request, jsonify, abort
+
+@app.route('/v1/predict1', methods=['POST', 'GET'])
 def predict_v1():
     """Prediction Endpoint v1: Using Model 1."""
-    data = request.get_json()
+    if request.method == 'POST':
+        if not request.is_json:
+            abort(415, description="Unsupported Media Type. Content-Type must be 'application/json'.")
 
-    if 'features' not in data:
-        return jsonify({"error": "Missing required field: features"}), 400
+        data = request.get_json()
 
-    features = data['features']
+        if 'features' not in data:
+            return jsonify({"error": "Missing required field: features"}), 400
 
-    # Initialize predictor and load the model
-    predictor = DataPredictor()
-    predictor.load_model(MODEL_PATH_1)
+        features = data['features']
 
-    # Make prediction
-    try:
-        prediction = predictor.predict(features)
-        return jsonify({
-            "success": True,
-            "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
+        # Initialize predictor and load the model
+        predictor = DataPredictor()
+        predictor.load_model(MODEL_PATH_1)
+
+        # Make prediction
+        try:
+            prediction = predictor.predict(features)
+            return jsonify({
+                "success": True,
+                "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
+            })
+        except Exception as e:
+            return jsonify({
+                "success": False,
+                "error": str(e)
+            }), 500
+    else:
+        return jsonify({"message": "Send a POST request with JSON data to get predictions."})
 
 
-@app.route('/v2/predict1', methods=['POST'])
+@app.route('/v2/predict2', methods=['POST'])
 def predict_v2():
     """Prediction Endpoint v2: Using Model 2."""
+    if not request.is_json:
+        abort(415, description="Unsupported Media Type. Content-Type must be 'application/json'.")
+
     data = request.get_json()
 
     if 'features' not in data:
