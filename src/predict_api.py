@@ -268,6 +268,46 @@ def predict_v1():
             "success": False,
             "error": str(e)
         }), 500
+    
+
+@app.route('/v2/predict2', methods=['POST'])
+def predict_v2():
+    """Prediction Endpoint v2: Using Model 2."""
+    if not request.is_json:
+        abort(415, description="Unsupported Media Type. Content-Type must be 'application/json'.")
+
+    data = request.get_json()
+
+    if 'features' not in data:
+        return jsonify({"error": "Missing required field: features"}), 400
+
+    features = data['features']
+
+    # Initialize predictor and load the model
+    predictor = DataPredictor()
+    try:
+        predictor.load_model(MODEL_PATH_2)
+    except FileNotFoundError as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+    # Preprocess features
+    try:
+        features = predictor.preprocess_features(features)
+    except ValueError as e:
+        return jsonify({"success": False, "error": str(e)}), 400
+
+    # Make prediction
+    try:
+        prediction = predictor.predict(features)
+        return jsonify({
+            "success": True,
+            "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)
