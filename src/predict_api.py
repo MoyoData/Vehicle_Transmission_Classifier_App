@@ -48,5 +48,16 @@ def home():
     }
     return jsonify(info)
 
+@app.route('/health_status', methods=['GET'])
+def health_status():
+    """Health Endpoint: Check if the API is up and ready."""
+    health = {
+        "status": "UP",
+        "message": "The Vehicle Transmission Classifier API is available and ready to receive requests."
+    }
+    return jsonify(health)
+
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)
+    
+    
