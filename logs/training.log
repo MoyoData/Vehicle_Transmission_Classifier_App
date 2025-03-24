@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2025-03-17 14:37:35,151 - vehicle_classifier.training - INFO - Loaded config: {'model_params': {'n_estimators': [100, 200], 'max_depth': [10], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False], 'max_features': ['sqrt', 'log2']}}
 2025-03-17 14:37:36,220 - vehicle_classifier.training - INFO - Starting MLflow run: bd9fd43a78fa4188afb55670c385699f with run name: classification_[100, 200]_default
 2025-03-17 14:37:36,400 - vehicle_classifier.training - INFO - Data successfully loaded.
@@ -30,3 +31,14 @@
 2025-03-23 19:16:41,559 - vehicle_classifier.training - INFO - Best model found: RandomForestClassifier(bootstrap=False, max_depth=10, random_state=42)
 2025-03-23 19:16:45,159 - vehicle_classifier.training - INFO - Model saved to /home/moyo/Vehicle_Transmission_Classifier_App-1/src/models/vehicle_transmission_model.pkl
 2025-03-23 19:16:45,160 - vehicle_classifier.training - INFO - MLflow Run ID: fbb21a828bcd444082d9eb4455c0bf63
+=======
+2025-03-23 19:25:51,772 - vehicle_classifier.training - INFO - Loaded config: {'model_params': {'n_estimators': [100, 200], 'max_depth': [10], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False], 'max_features': ['sqrt', 'log2']}}
+2025-03-23 19:27:29,313 - vehicle_classifier.training - INFO - Loaded config: {'model_params': {'n_estimators': [100, 200], 'max_depth': [10], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False], 'max_features': ['sqrt', 'log2']}}
+2025-03-23 19:30:55,902 - vehicle_classifier.training - INFO - Loaded config: {'model_params': {'n_estimators': [100, 200], 'max_depth': [10], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False], 'max_features': ['sqrt', 'log2']}}
+2025-03-23 19:32:28,842 - vehicle_classifier.training - INFO - Loaded config: {'model_params': {'n_estimators': [100, 200], 'max_depth': [10], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False], 'max_features': ['sqrt', 'log2']}}
+2025-03-23 19:32:29,068 - vehicle_classifier.training - INFO - Starting MLflow run: da492c9262a04668875959b4187e868a with run name: classification_[100, 200]default
+2025-03-23 19:32:29,068 - vehicle_classifier.training - ERROR - Data file not found: /home/chiomau/Vehicle_Transmission_Classifier_App-2/data/processed/processed_data.csv
+2025-03-23 19:36:49,785 - vehicle_classifier.training - INFO - Loaded config: {'model_params': {'n_estimators': [100, 200], 'max_depth': [10], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False], 'max_features': ['sqrt', 'log2']}}
+2025-03-23 19:36:50,174 - vehicle_classifier.training - INFO - Starting MLflow run: 24b7414ad5804e76813b0529e1937a51 with run name: classification_[100, 200]default
+2025-03-23 19:36:50,175 - vehicle_classifier.training - ERROR - Data file not found: /home/chiomau/Vehicle_Transmission_Classifier_App-2/data/processed/processed_data.csv
+>>>>>>> 4a966a0799f08ea4b1e66d4cab7f03aeec301c45

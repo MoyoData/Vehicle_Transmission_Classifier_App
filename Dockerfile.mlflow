@@ -24,4 +24,8 @@ EXPOSE 5000
 VOLUME ${LOG_DIR}
 
 # Command to run MLflow server with a local backend and artifact store
+<<<<<<< HEAD
 CMD ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "sqlite:///mlflow.db", "--default-artifact-root", "./mlruns"]
+=======
+CMD ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "sqlite:///mlflow.db", "--default-artifact-root", "./mlruns"]
+>>>>>>> 4a966a0799f08ea4b1e66d4cab7f03aeec301c45

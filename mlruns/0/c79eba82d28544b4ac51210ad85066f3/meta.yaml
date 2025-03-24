@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/c79eba82d28544b4ac51210ad85066f3/artifacts
+end_time: 1742780278422
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c79eba82d28544b4ac51210ad85066f3
+run_name: upset-stork-518
+run_uuid: c79eba82d28544b4ac51210ad85066f3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1742780275768
+status: 4
+tags: []
+user_id: chiomau

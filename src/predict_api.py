@@ -355,4 +355,9 @@ def predict_v2():
 
 if __name__ == "__main__":
     predict_api_logger.info("Starting Flask application")
+<<<<<<< HEAD
     app.run(host='127.0.0.1', port=5001, debug=True)
+=======
+    app.run(host='127.0.0.1', port=5001, debug=True)
+    
+>>>>>>> 4a966a0799f08ea4b1e66d4cab7f03aeec301c45

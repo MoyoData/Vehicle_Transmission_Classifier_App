@@ -9,17 +9,8 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 import joblib
 from sklearn.preprocessing import LabelEncoder
 import numpy as np
-
-# Import the custom logging configuration
-from logging_config import configure_logging
-
-# Configure logging and get the training-specific logger
-loggers = configure_logging()
-logger = loggers['training']
-
-# Set MLflow tracking URI
-mlflow_tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
-mlflow.set_tracking_uri("file:/home/moyo/mlflow")
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 class ModelTrainer:
     def __init__(self, data_path):
@@ -142,7 +133,7 @@ if __name__ == "__main__":
     mlflow.sklearn.autolog()
 
     # Start an MLflow run to track the experiment
-    run_name = f"classification_{config.get('model_params', {}).get('n_estimators', 'default')}_{training_compute}" if config else f"classification_default_{training_compute}"
+    run_name = f"classification_{config.get('model_params', {}).get('n_estimators', 'default')}_{training_compute}"
     with mlflow.start_run(run_name=run_name) as run:
         logger.info(f"Starting MLflow run: {run.info.run_id} with run name: {run_name}")
 
@@ -179,4 +170,5 @@ if __name__ == "__main__":
         # Save the model locally
         model_save_path = trainer.save_model()
 
-        logger.info(f"MLflow Run ID: {run.info.run_id}")
+
+        logging.info(f"MLflow Run ID: {run.info.run_id}")

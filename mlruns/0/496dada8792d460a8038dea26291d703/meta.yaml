@@ -1,0 +1,15 @@
+artifact_uri: file:///home/moyo/CMPT2500_Vehicle_Transmission_Classifier_Project/mlruns/0/496dada8792d460a8038dea26291d703/artifacts
+end_time: 1742780521897
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 496dada8792d460a8038dea26291d703
+run_name: angry-whale-591
+run_uuid: 496dada8792d460a8038dea26291d703
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1742780519481
+status: 4
+tags: []
+user_id: chiomau
