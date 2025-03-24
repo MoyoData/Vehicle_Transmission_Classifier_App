@@ -1,0 +1,37 @@
+services:
+  ml_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlapp
+    container_name: ml_app
+    ports:
+      - "8000:5000"  
+    volumes:
+      - ./logs/ml_app:/app/logs  
+      - ./src:/app/src  # Mount the src directory to /app/src in the container
+    environment:
+      - LOG_DIR=/app/logs
+    command: python /app/src/predict_api.py  # Ensure the correct path to the script
+    depends_on:
+      - mlflow_server
+    networks:
+      - ml-network
+
+  mlflow_server:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    container_name: mlflow_server
+    ports:
+      - "5000:5000"  
+    volumes:
+      - ./mlruns:/mlflow/mlruns  
+      - ./logs/mlflow:/mlflow/logs  
+    environment:
+      - LOG_DIR=/mlflow/logs
+    networks:
+      - ml-network
+
+networks:
+  ml-network:
+  driver: bridge

@@ -1,0 +1,27 @@
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
+
+# Set environment variables for Python and logging
+ENV PYTHONUNBUFFERED=1 \
+    LOG_DIR=/mlflow/logs
+
+# Create a directory for logs and set permissions
+RUN mkdir -p ${LOG_DIR} && chmod -R 777 ${LOG_DIR}
+
+# Set the working directory
+WORKDIR /mlflow
+
+# Install MLflow and necessary dependencies
+RUN pip install --no-cache-dir mlflow pymysql
+
+# Copy the required project files (modify as needed)
+COPY . /mlflow
+
+# Expose the default MLflow UI port (5000 by default, change if needed)
+EXPOSE 5000
+
+# Set the log directory as a volume for persistent logging
+VOLUME ${LOG_DIR}
+
+# Command to run MLflow server with a local backend and artifact store
+CMD ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "sqlite:///mlflow.db", "--default-artifact-root", "./mlruns"]
