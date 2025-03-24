@@ -1,0 +1,38 @@
+# Python cache files
+__pycache__/
+
+
+# Virtual environment
+.venv/
+
+# Version control
+.git/
+.gitignore
+
+# Data directories
+predictions/
+
+# Model files
+*.pkl
+*.joblib
+
+# Logs
+logs/
+*.log
+
+# MLflow
+mlruns/
+
+# Notebooks directory
+notebooks/
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Testing
+.pytest_cache/
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml

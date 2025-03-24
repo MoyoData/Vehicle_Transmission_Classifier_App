@@ -1,0 +1,6 @@
+2025-03-17 12:00:04,120 - vehicle_classifier.predict_api - INFO - Starting Flask application
+2025-03-17 12:03:37,368 - vehicle_classifier.predict_api - INFO - Starting Flask application
+2025-03-17 12:03:38,169 - vehicle_classifier.predict_api - INFO - Starting Flask application
+2025-03-17 12:04:33,992 - vehicle_classifier.predict_api - INFO - Accessed health status endpoint
+2025-03-17 12:15:51,594 - vehicle_classifier.predict_api - INFO - Starting Flask application
+2025-03-17 12:15:58,557 - vehicle_classifier.predict_api - INFO - Starting Flask application
