@@ -6,10 +6,40 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import logging
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
+# Create the Flask app instance
 app = Flask(__name__)
+
+# Configure logging
+def configure_logging(log_directory='logs'):
+    # Ensure the log directory exists
+    os.makedirs(log_directory, exist_ok=True)
+    
+    # Define the logging format
+    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    
+    # Configure root logger
+    logging.basicConfig(
+        level=logging.INFO,
+        format=log_format,
+        handlers=[logging.StreamHandler()]  # Log to stdout for Docker
+    )
+    
+    # Create module-specific loggers
+    modules = ['data_processing', 'train', 'predict', 'predict_api']
+    loggers = {}
+
+    for module in modules:
+        logger = logging.getLogger(f'vehicle_classifier.{module}')
+        file_handler = logging.FileHandler(f'{log_directory}/{module}.log')
+        file_handler.setFormatter(logging.Formatter(log_format))
+        logger.addHandler(file_handler)
+        loggers[module] = logger
+
+    return loggers
+
+# Configure logging
+loggers = configure_logging()
+predict_api_logger = loggers['predict_api']
 
 # Project root
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
@@ -27,6 +57,7 @@ label_encoders = {
     'certified': LabelEncoder(),
     'fuel_type_from_vin': LabelEncoder()
 }
+
 # Fit the label encoders with example data 
 label_encoders['dealer_type'].fit(['F', 'I'])  
 label_encoders['stock_type'].fit(['NEW', 'USED'])
@@ -156,10 +187,8 @@ label_encoders['model'].fit(['2500', 'Yukon', 'RX350h', 'Wrangler', 'Odyssey', '
 label_encoders['certified'].fit(['Yes', 'No'])
 label_encoders['fuel_type_from_vin'].fit(['Diesel', 'Gasoline', 'Hybrid', 'PHEV', 'Electric', 'Hydrogen','CNG'])
 
-
-
 class DataPredictor:
-    def _init_(self):
+    def __init__(self):
         self.model = None
 
     def load_model(self, model_path):
@@ -167,7 +196,7 @@ class DataPredictor:
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model file not found: {model_path}")
         self.model = joblib.load(model_path)
-        logging.info(f"Model loaded from {model_path}")
+        predict_api_logger.info(f"Model loaded from {model_path}")
 
     def preprocess_features(self, features):
         """Preprocess input features: encode categorical features."""
@@ -180,7 +209,7 @@ class DataPredictor:
             features[7] = label_encoders['certified'].transform([features[7]])[0]  # certified
             features[8] = label_encoders['fuel_type_from_vin'].transform([features[8]])[0]  # fuel_type_from_vin
         except ValueError as e:
-            logging.error(f"Error encoding categorical features: {e}")
+            predict_api_logger.error(f"Error encoding categorical features: {e}")
             raise ValueError(f"Invalid categorical value: {e}")
 
         return features
@@ -191,13 +220,10 @@ class DataPredictor:
             raise ValueError("Model not loaded.")
         return self.model.predict([features])
 
-
-
-
-
 @app.route('/Vehicle_Transmission_Classifier_API', methods=['GET'])
 def home():
     """Home Endpoint: Description of API and expected JSON format."""
+    predict_api_logger.info("Accessed home endpoint")
     info = {
         "name": "Vehicle Transmission Classifier API",
         "description": "This API allows making predictions using pre-trained machine learning models to classify the transmission type of vehicles. You can use two models to predict whether a vehicle has an automatic or manual transmission based on various input features.",
@@ -224,6 +250,7 @@ def home():
 @app.route('/health_status', methods=['GET'])
 def health_status():
     """Health Endpoint: Check if the API is up and ready."""
+    predict_api_logger.info("Accessed health status endpoint")
     health = {
         "status": "UP",
         "message": "The Vehicle Transmission Classifier API is available and ready to receive requests."
@@ -233,12 +260,15 @@ def health_status():
 @app.route('/v1/predict1', methods=['POST'])
 def predict_v1():
     """Prediction Endpoint v1: Using Model 1."""
+    predict_api_logger.info("Accessed predict_v1 endpoint")
     if not request.is_json:
+        predict_api_logger.error("Unsupported Media Type in predict_v1")
         abort(415, description="Unsupported Media Type. Content-Type must be 'application/json'.")
 
     data = request.get_json()
 
     if 'features' not in data:
+        predict_api_logger.error("Missing required field: features in predict_v1")
         return jsonify({"error": "Missing required field: features"}), 400
 
     features = data['features']
@@ -247,38 +277,46 @@ def predict_v1():
     predictor = DataPredictor()
     try:
         predictor.load_model(MODEL_PATH_1)
+        predict_api_logger.info(f"Model loaded from {MODEL_PATH_1}")
     except FileNotFoundError as e:
+        predict_api_logger.error(f"Model file not found: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
     # Preprocess features
     try:
         features = predictor.preprocess_features(features)
+        predict_api_logger.info("Features preprocessed successfully")
     except ValueError as e:
+        predict_api_logger.error(f"Error preprocessing features: {e}")
         return jsonify({"success": False, "error": str(e)}), 400
 
     # Make prediction
     try:
         prediction = predictor.predict(features)
+        predict_api_logger.info(f"Prediction made successfully: {prediction}")
         return jsonify({
             "success": True,
             "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
         })
     except Exception as e:
+        predict_api_logger.error(f"Error making prediction: {e}")
         return jsonify({
             "success": False,
             "error": str(e)
         }), 500
-    
 
 @app.route('/v2/predict2', methods=['POST'])
 def predict_v2():
     """Prediction Endpoint v2: Using Model 2."""
+    predict_api_logger.info("Accessed predict_v2 endpoint")
     if not request.is_json:
+        predict_api_logger.error("Unsupported Media Type in predict_v2")
         abort(415, description="Unsupported Media Type. Content-Type must be 'application/json'.")
 
     data = request.get_json()
 
     if 'features' not in data:
+        predict_api_logger.error("Missing required field: features in predict_v2")
         return jsonify({"error": "Missing required field: features"}), 400
 
     features = data['features']
@@ -287,29 +325,35 @@ def predict_v2():
     predictor = DataPredictor()
     try:
         predictor.load_model(MODEL_PATH_2)
+        predict_api_logger.info(f"Model loaded from {MODEL_PATH_2}")
     except FileNotFoundError as e:
+        predict_api_logger.error(f"Model file not found: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
     # Preprocess features
     try:
         features = predictor.preprocess_features(features)
+        predict_api_logger.info("Features preprocessed successfully")
     except ValueError as e:
+        predict_api_logger.error(f"Error preprocessing features: {e}")
         return jsonify({"success": False, "error": str(e)}), 400
 
     # Make prediction
     try:
         prediction = predictor.predict(features)
+        predict_api_logger.info(f"Prediction made successfully: {prediction}")
         return jsonify({
             "success": True,
             "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
         })
     except Exception as e:
+        predict_api_logger.error(f"Error making prediction: {e}")
         return jsonify({
             "success": False,
             "error": str(e)
         }), 500
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=5000, debug=True)
-    
+    predict_api_logger.info("Starting Flask application")
+    app.run(host='127.0.0.1', port=5001, debug=True)
     
