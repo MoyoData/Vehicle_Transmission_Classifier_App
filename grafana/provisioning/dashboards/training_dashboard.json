@@ -1,0 +1,43 @@
+{
+    "title": "Training Metrics",
+    "description": "Dashboard for monitoring model training performance",
+    "tags": ["ml", "training"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "title": "Training Loss",
+        "type": "graph",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "avg(ml_training_loss) by (model_version)",
+            "legendFormat": "{{model_version}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "title": "Training Accuracy",
+        "type": "graph",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "avg(ml_training_accuracy) by (model_version)",
+            "legendFormat": "{{model_version}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "model_version",
+          "label": "Model Version",
+          "type": "query",
+          "datasource": "Prometheus",
+          "query": "label_values(ml_training_loss, model_version)"
+        }
+      ]
+    }
+  }

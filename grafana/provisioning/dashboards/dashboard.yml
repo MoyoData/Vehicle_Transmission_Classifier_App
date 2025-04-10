@@ -1,0 +1,13 @@
+apiVersion: 1
+
+providers:
+  - name: 'ML Dashboards'
+    orgId: 1
+    folder: 'ML Monitoring'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30  # Check for updates every 30 seconds
+    allowUiUpdates: true  # Allows manual edits in the UI
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: true

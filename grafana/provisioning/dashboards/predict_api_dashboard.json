@@ -1,0 +1,83 @@
+{
+    "title": "Prediction API Metrics",
+    "description": "Dashboard for monitoring prediction API performance",
+    "tags": ["ml", "api"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "title": "Prediction Requests",
+        "type": "graph",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sum(rate(model_prediction_requests_total[1m])) by (status, model_version)",
+            "legendFormat": "{{model_version}} - {{status}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "title": "Prediction Latency",
+        "type": "graph",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(model_prediction_duration_seconds_bucket[1m])) by (le, model_version))",
+            "legendFormat": "P95 - {{model_version}}"
+          },
+          {
+            "expr": "histogram_quantile(0.50, sum(rate(model_prediction_duration_seconds_bucket[1m])) by (le, model_version))",
+            "legendFormat": "P50 - {{model_version}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "title": "System Resources",
+        "type": "row",
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 8}
+      },
+      {
+        "title": "Memory Usage",
+        "type": "gauge",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "app_memory_usage_bytes / 1024 / 1024",
+            "legendFormat": "MB"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 6, "x": 0, "y": 9}
+      },
+      {
+        "title": "CPU Usage",
+        "type": "gauge",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "app_cpu_usage_percent",
+            "legendFormat": "%"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 6, "x": 6, "y": 9}
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "model_version",
+          "label": "Model Version",
+          "type": "query",
+          "datasource": "Prometheus",
+          "query": "label_values(model_prediction_requests_total, model_version)"
+        },
+        {
+          "name": "endpoint",
+          "label": "API Endpoint",
+          "type": "query",
+          "datasource": "Prometheus",
+          "query": "label_values(model_prediction_requests_total, endpoint)"
+        }
+      ]
+    }
+  }

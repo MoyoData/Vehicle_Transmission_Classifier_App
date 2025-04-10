@@ -1,39 +1,44 @@
 # Use an official lightweight Python image
 FROM python:3.9-slim
 
-# Set environment variables for Python and logging
+# Set environment variables
 ENV PYTHONUNBUFFERED=1 \
-    LOG_DIR=/app/logs
+    LOG_DIR=/app/logs \
+    PROMETHEUS_MULTIPROC_DIR=/app/prometheus_metrics
 
-# Create a directory for logs and set permissions
-RUN mkdir -p ${LOG_DIR} && chmod -R 777 ${LOG_DIR}
+# Install system dependencies and create directories
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc python3-dev curl && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p ${LOG_DIR} ${PROMETHEUS_MULTIPROC_DIR} && \
+    chmod -R 777 ${LOG_DIR} ${PROMETHEUS_MULTIPROC_DIR}
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the requirements file first to leverage Docker layer caching
+# Copy requirements first for caching
 COPY requirements.txt ./
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install prometheus-flask-exporter
 
-# Copy the application code
+# Copy application files
 COPY src/ /app/src/
-
-# Copy model files from src/models to /app/models
 COPY src/models/ /app/models/
-
-# Copy configuration files
 COPY configs/ /app/configs/
-
-# Copy data folder 
 COPY data/ /app/data/
 
-# Expose port for any API or dashboard (if applicable)
+# Expose ports (removed comments to prevent parsing issues)
 EXPOSE 5000
+EXPOSE 5001
 
-# Set the log directory as a volume for persistent logging
-VOLUME ${LOG_DIR}
+# Create volumes
+VOLUME ${LOG_DIR} ${PROMETHEUS_MULTIPROC_DIR}
 
-# Define the entrypoint command (modify as needed, e.g., running a script or API server)
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD curl -f http://localhost:5000/health_status || exit 1
+
+# Entrypoint command
 CMD ["python", "src/predict_api.py"]

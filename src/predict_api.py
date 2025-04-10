@@ -1,13 +1,40 @@
 import os
 import json
+import time
 from flask import Flask, request, jsonify, abort
 import joblib
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import logging
+from prometheus_flask_exporter import PrometheusMetrics
+from prometheus_client import Counter, Histogram, Gauge
+import threading
+import psutil
 
 # Create the Flask app instance
 app = Flask(__name__)
+
+# Initialize Prometheus metrics
+metrics = PrometheusMetrics(app, path='/metrics')
+
+# Custom metrics
+prediction_requests = Counter(
+    'model_prediction_requests_total', 
+    'Total number of prediction requests', 
+    ['model_version', 'endpoint', 'status']
+)
+prediction_time = Histogram(
+    'model_prediction_duration_seconds', 
+    'Time spent processing prediction', 
+    ['model_version', 'endpoint']
+)
+memory_usage = Gauge('app_memory_usage_bytes', 'Memory usage of the application')
+cpu_usage = Gauge('app_cpu_usage_percent', 'CPU usage percentage of the application')
+model_load_time = Histogram(
+    'model_load_duration_seconds',
+    'Time spent loading models',
+    ['model_version']
+)
 
 # Configure logging
 def configure_logging(log_directory='logs'):
@@ -163,7 +190,7 @@ label_encoders['model'].fit(['2500', 'Yukon', 'RX350h', 'Wrangler', 'Odyssey', '
        'PT Cruiser', 'Mirai', '718 Boxster', 'Defender 90', 'Routan',
        'Allure', 'Commercial Vans', 'TT', 'Golf AllTrack', 'Prius C',
        'S60 2015.5', 'RS 7', 'G35', 'Cabriolet', 'Torrent', 'Orlando',
-       'Mirage G4', 'R1T', '2500 ProMaster', 'EX35', 'Cavalier',
+       'R1T', '2500 ProMaster', 'EX35', 'Cavalier',
        'Spark EV', '1-Series', 'DTS', 'RC-Series', 'E-Pace', 'A6 Allroad',
        'B9 Tribeca', 'Panamera', 'E150 Vans', 'FX37', 'Z4', 'LX-Series',
        'Yukon XL 1500', 'XL-7', 'ES300h', 'CLK-Class', 'Aveo',
@@ -192,172 +219,104 @@ class DataPredictor:
         self.model = None
 
     def load_model(self, model_path):
-        """Load a model from a file."""
+        start_time = time.time()
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model file not found: {model_path}")
         self.model = joblib.load(model_path)
-        predict_api_logger.info(f"Model loaded from {model_path}")
+        load_time = time.time() - start_time
+        
+        model_version = "1.0" if "62ce78f65aaa4384866e78f4f68763ca" in model_path else "2.0"
+        model_load_time.labels(model_version=model_version).observe(load_time)
+        predict_api_logger.info(f"Model loaded from {model_path} in {load_time:.4f} seconds")
 
     def preprocess_features(self, features):
-        """Preprocess input features: encode categorical features."""
         try:
-            # Encode categorical features
-            features[0] = label_encoders['dealer_type'].transform([features[0]])[0]  # dealer_type
-            features[1] = label_encoders['stock_type'].transform([features[1]])[0]  # stock_type
-            features[5] = label_encoders['make'].transform([features[5]])[0]  # make
-            features[6] = label_encoders['model'].transform([features[6]])[0]  # model
-            features[7] = label_encoders['certified'].transform([features[7]])[0]  # certified
-            features[8] = label_encoders['fuel_type_from_vin'].transform([features[8]])[0]  # fuel_type_from_vin
+            features[0] = label_encoders['dealer_type'].transform([features[0]])[0]
+            features[1] = label_encoders['stock_type'].transform([features[1]])[0]
+            features[5] = label_encoders['make'].transform([features[5]])[0]
+            features[6] = label_encoders['model'].transform([features[6]])[0]
+            features[7] = label_encoders['certified'].transform([features[7]])[0]
+            features[8] = label_encoders['fuel_type_from_vin'].transform([features[8]])[0]
+            return features
         except ValueError as e:
-            predict_api_logger.error(f"Error encoding categorical features: {e}")
-            raise ValueError(f"Invalid categorical value: {e}")
-
-        return features
+            predict_api_logger.error(f"Error encoding features: {e}")
+            raise
 
     def predict(self, features):
-        """Make predictions using the loaded model."""
         if self.model is None:
             raise ValueError("Model not loaded.")
         return self.model.predict([features])
 
+def monitor_resources():
+    while True:
+        try:
+            process = psutil.Process(os.getpid())
+            memory_usage.set(process.memory_info().rss)
+            cpu_usage.set(process.cpu_percent())
+            time.sleep(15)
+        except Exception as e:
+            predict_api_logger.error(f"Resource monitoring error: {e}")
+
+@app.route('/metrics')
+def metrics_endpoint():
+    return metrics.export()
+
 @app.route('/Vehicle_Transmission_Classifier_API', methods=['GET'])
 def home():
-    """Home Endpoint: Description of API and expected JSON format."""
-    predict_api_logger.info("Accessed home endpoint")
-    info = {
+    return jsonify({
         "name": "Vehicle Transmission Classifier API",
-        "description": "This API allows making predictions using pre-trained machine learning models to classify the transmission type of vehicles. You can use two models to predict whether a vehicle has an automatic or manual transmission based on various input features.",
         "version": "v1.0",
         "endpoints": {
             "/Vehicle_Transmission_Classifier_API": "Home Page",
             "/health_status": "Health Check",
             "/v1/predict1": "Prediction using Model 1",
-            "/v2/predict2": "Prediction using Model 2"
-        },
-        "input_format": {
-            "features": "List of features for prediction  [dealer_type, stock_type, mileage, price, model_year, make, model, certified, fuel_type_from_vin, number_price_changes]",
-            "example_request": {
-                "features": ["F", "USED", 15000, 23000, 2018, "Toyota", "Corolla", "Yes", "Gasoline", 2]
-            }
-        },
-        "example_response": {
-            "success": True,
-            "prediction": [0]
+            "/v2/predict2": "Prediction using Model 2",
+            "/metrics": "Prometheus Metrics"
         }
-    }
-    return jsonify(info)
+    })
 
 @app.route('/health_status', methods=['GET'])
 def health_status():
-    """Health Endpoint: Check if the API is up and ready."""
-    predict_api_logger.info("Accessed health status endpoint")
-    health = {
-        "status": "UP",
-        "message": "The Vehicle Transmission Classifier API is available and ready to receive requests."
-    }
-    return jsonify(health)
+    return jsonify({"status": "UP", "message": "API is ready"})
 
 @app.route('/v1/predict1', methods=['POST'])
 def predict_v1():
-    """Prediction Endpoint v1: Using Model 1."""
-    predict_api_logger.info("Accessed predict_v1 endpoint")
-    if not request.is_json:
-        predict_api_logger.error("Unsupported Media Type in predict_v1")
-        abort(415, description="Unsupported Media Type. Content-Type must be 'application/json'.")
-
-    data = request.get_json()
-
-    if 'features' not in data:
-        predict_api_logger.error("Missing required field: features in predict_v1")
-        return jsonify({"error": "Missing required field: features"}), 400
-
-    features = data['features']
-
-    # Initialize predictor and load the model
-    predictor = DataPredictor()
-    try:
-        predictor.load_model(MODEL_PATH_1)
-        predict_api_logger.info(f"Model loaded from {MODEL_PATH_1}")
-    except FileNotFoundError as e:
-        predict_api_logger.error(f"Model file not found: {e}")
-        return jsonify({"success": False, "error": str(e)}), 500
-
-    # Preprocess features
-    try:
-        features = predictor.preprocess_features(features)
-        predict_api_logger.info("Features preprocessed successfully")
-    except ValueError as e:
-        predict_api_logger.error(f"Error preprocessing features: {e}")
-        return jsonify({"success": False, "error": str(e)}), 400
-
-    # Make prediction
-    try:
-        prediction = predictor.predict(features)
-        predict_api_logger.info(f"Prediction made successfully: {prediction}")
-        return jsonify({
-            "success": True,
-            "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
-        })
-    except Exception as e:
-        predict_api_logger.error(f"Error making prediction: {e}")
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
+    return handle_prediction(MODEL_PATH_1, "1.0", "v1/predict1")
 
 @app.route('/v2/predict2', methods=['POST'])
 def predict_v2():
-    """Prediction Endpoint v2: Using Model 2."""
-    predict_api_logger.info("Accessed predict_v2 endpoint")
-    if not request.is_json:
-        predict_api_logger.error("Unsupported Media Type in predict_v2")
-        abort(415, description="Unsupported Media Type. Content-Type must be 'application/json'.")
+    return handle_prediction(MODEL_PATH_2, "2.0", "v2/predict2")
 
-    data = request.get_json()
-
-    if 'features' not in data:
-        predict_api_logger.error("Missing required field: features in predict_v2")
-        return jsonify({"error": "Missing required field: features"}), 400
-
-    features = data['features']
-
-    # Initialize predictor and load the model
-    predictor = DataPredictor()
+def handle_prediction(model_path, model_version, endpoint):
+    start_time = time.time()
+    predict_api_logger.info(f"Accessed {endpoint} endpoint")
+    
     try:
-        predictor.load_model(MODEL_PATH_2)
-        predict_api_logger.info(f"Model loaded from {MODEL_PATH_2}")
-    except FileNotFoundError as e:
-        predict_api_logger.error(f"Model file not found: {e}")
+        if not request.is_json:
+            abort(415, description="Content-Type must be 'application/json'")
+        
+        data = request.get_json()
+        if 'features' not in data:
+            prediction_requests.labels(model_version=model_version, endpoint=endpoint, status="error").inc()
+            return jsonify({"error": "Missing features"}), 400
+
+        predictor = DataPredictor()
+        predictor.load_model(model_path)
+        features = predictor.preprocess_features(data['features'])
+        prediction = predictor.predict(features)
+        
+        duration = time.time() - start_time
+        prediction_time.labels(model_version=model_version, endpoint=endpoint).observe(duration)
+        prediction_requests.labels(model_version=model_version, endpoint=endpoint, status="success").inc()
+        
+        return jsonify({"success": True, "prediction": prediction.tolist()})
+    
+    except Exception as e:
+        predict_api_logger.error(f"Error in {endpoint}: {e}")
+        prediction_requests.labels(model_version=model_version, endpoint=endpoint, status="error").inc()
         return jsonify({"success": False, "error": str(e)}), 500
 
-    # Preprocess features
-    try:
-        features = predictor.preprocess_features(features)
-        predict_api_logger.info("Features preprocessed successfully")
-    except ValueError as e:
-        predict_api_logger.error(f"Error preprocessing features: {e}")
-        return jsonify({"success": False, "error": str(e)}), 400
-
-    # Make prediction
-    try:
-        prediction = predictor.predict(features)
-        predict_api_logger.info(f"Prediction made successfully: {prediction}")
-        return jsonify({
-            "success": True,
-            "prediction": prediction.tolist()  # Convert numpy array to list for JSON compatibility
-        })
-    except Exception as e:
-        predict_api_logger.error(f"Error making prediction: {e}")
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
-
 if __name__ == "__main__":
-    predict_api_logger.info("Starting Flask application")
-<<<<<<< HEAD
-    app.run(host='127.0.0.1', port=5001, debug=True)
-=======
-    app.run(host='127.0.0.1', port=5001, debug=True)
-    
->>>>>>> 4a966a0799f08ea4b1e66d4cab7f03aeec301c45
+    predict_api_logger.info("Starting application")
+    threading.Thread(target=monitor_resources, daemon=True).start()
+    app.run(host='0.0.0.0', port=5000)

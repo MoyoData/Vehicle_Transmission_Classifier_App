@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   ml_app:
     build:
@@ -5,17 +7,26 @@ services:
       dockerfile: Dockerfile.mlapp
     container_name: ml_app
     ports:
-      - "8000:5000"  
+      - "8000:5000"
+      - "8001:5001"
     volumes:
-      - ./logs/ml_app:/app/logs  
-      - ./src:/app/src  # Mount the src directory to /app/src in the container
+      - ./logs/ml_app:/app/logs
+      # Remove this if you want to use the built-in code:
+      # - ./src:/app/src
     environment:
       - LOG_DIR=/app/logs
-    command: python /app/src/predict_api.py  # Ensure the correct path to the script
+      - PROMETHEUS_MULTIPROC_DIR=/app/prometheus_metrics
+    command: python /app/src/predict_api.py
     depends_on:
       - mlflow_server
     networks:
       - ml-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   mlflow_server:
     build:
@@ -23,15 +34,60 @@ services:
       dockerfile: Dockerfile.mlflow
     container_name: mlflow_server
     ports:
-      - "5000:5000"  
+      - "5000:5000"
     volumes:
-      - ./mlruns:/mlflow/mlruns  
-      - ./logs/mlflow:/mlflow/logs  
+      - ./mlruns:/mlflow/mlruns
+      - ./logs/mlflow:/mlflow/logs
     environment:
       - LOG_DIR=/mlflow/logs
     networks:
       - ml-network
 
+  prometheus:
+    image: prom/prometheus:v2.49.1
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules:/etc/prometheus/rules
+      - prometheus_data:/prometheus
+    networks:
+      - ml-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana-storage:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      - prometheus
+    networks:
+      - ml-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 networks:
   ml-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  grafana-storage:
+  prometheus_data:

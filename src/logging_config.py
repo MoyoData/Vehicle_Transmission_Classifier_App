@@ -48,8 +48,4 @@ def configure_logging(log_directory='logs'):
         # Store the logger in the dictionary
         loggers[module] = logger
 
-<<<<<<< HEAD
     return loggers
-=======
-    return loggers
->>>>>>> 4a966a0799f08ea4b1e66d4cab7f03aeec301c45
