@@ -10,7 +10,7 @@ services:
     volumes:
       - ./logs/ml_app:/app/logs
       # Uncomment the following line if you want to mount the source code for development:
-      # - ./src:/app/src
+      - ./src:/app/src
     environment:
       - LOG_DIR=/app/logs
       - PROMETHEUS_MULTIPROC_DIR=/app/prometheus_metrics
@@ -86,25 +86,6 @@ services:
       - prometheus
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  training_metrics:   
-    build:
-      context: .
-      dockerfile: Dockerfile.training_metrics
-    container_name: training_metrics
-    ports:
-      - "8002:8002"
-    volumes:
-      - ./logs/training_metrics:/app/logs
-    environment:
-      - LOG_DIR=/app/logs
-    networks:
-      - ml-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
       interval: 30s
       timeout: 10s
       retries: 3

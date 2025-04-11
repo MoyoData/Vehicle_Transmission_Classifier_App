@@ -9,9 +9,10 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 import joblib
 from sklearn.preprocessing import LabelEncoder
 import numpy as np
+import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
+logger = logging.getLogger(__name__)
 class ModelTrainer:
     def __init__(self, data_path):
         self.data_path = data_path
