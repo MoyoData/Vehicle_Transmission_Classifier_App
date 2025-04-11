@@ -9,3 +9,4 @@
 2025-04-08 22:06:07,786 - vehicle_classifier.predict_api - INFO - Starting Flask application
 2025-04-08 22:06:10,195 - vehicle_classifier.predict_api - INFO - Starting Flask application
 2025-04-08 22:23:13,183 - vehicle_classifier.predict_api - INFO - Starting application
+2025-04-11 02:47:22,688 - vehicle_classifier.predict_api - INFO - Starting application
