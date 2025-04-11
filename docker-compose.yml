@@ -53,8 +53,16 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus/rules:/etc/prometheus/rules
       - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
     networks:
       - ml-network
+    depends_on:
+      - ml_app
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost:9090/-/healthy"]
       interval: 30s
@@ -66,18 +74,37 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - grafana-storage:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
       - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
+    networks:
+      - ml-network
     depends_on:
       - prometheus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  training_metrics:   
+    build:
+      context: .
+      dockerfile: Dockerfile.training_metrics
+    container_name: training_metrics
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./logs/training_metrics:/app/logs
+    environment:
+      - LOG_DIR=/app/logs
     networks:
       - ml-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -90,5 +117,11 @@ networks:
         - subnet: 172.20.0.0/16
 
 volumes:
-  grafana-storage:
+  mlflow-data:
+  mlflow_data:
+    driver: local
   prometheus_data:
+    driver: local
+  grafana-data:
+    driver: local
+ 
