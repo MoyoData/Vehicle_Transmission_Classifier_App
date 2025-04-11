@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   ml_app:
     build:
@@ -11,7 +9,7 @@ services:
       - "8001:5001"
     volumes:
       - ./logs/ml_app:/app/logs
-      # Remove this if you want to use the built-in code:
+      # Uncomment the following line if you want to mount the source code for development:
       # - ./src:/app/src
     environment:
       - LOG_DIR=/app/logs
@@ -36,10 +34,13 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./mlruns:/mlflow/mlruns
-      - ./logs/mlflow:/mlflow/logs
+      - ./mlruns:/mlflow/mlruns  # Persist artifact store
+      - ./mlflow.db:/mlflow/mlflow.db  # Persist SQLite database
+      - ./logs/mlflow:/mlflow/logs  # Persist logs
     environment:
       - LOG_DIR=/mlflow/logs
+      - BACKEND_STORE_URI=sqlite:///mlflow.db
+      - ARTIFACT_ROOT=/mlflow/mlruns
     networks:
       - ml-network
 
