@@ -9,8 +9,6 @@ services:
       - "8001:5001"
     volumes:
       - ./logs/ml_app:/app/logs
-      # Uncomment the following line if you want to mount the source code for development:
-      # - ./src:/app/src
     environment:
       - LOG_DIR=/app/logs
       - PROMETHEUS_MULTIPROC_DIR=/app/prometheus_metrics
@@ -34,9 +32,9 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./mlruns:/mlflow/mlruns  # Persist artifact store
-      - ./mlflow.db:/mlflow/mlflow.db  # Persist SQLite database
-      - ./logs/mlflow:/mlflow/logs  # Persist logs
+      - ./mlruns:/mlflow/mlruns
+      - ./mlflow.db:/mlflow/mlflow.db
+      - ./logs/mlflow:/mlflow/logs
     environment:
       - LOG_DIR=/mlflow/logs
       - BACKEND_STORE_URI=sqlite:///mlflow.db
@@ -56,8 +54,6 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--web.enable-lifecycle'
     networks:
       - ml-network
@@ -90,7 +86,7 @@ services:
       timeout: 10s
       retries: 3
 
-  training_metrics:   
+  training_metrics:
     build:
       context: .
       dockerfile: Dockerfile.training_metrics
@@ -117,11 +113,9 @@ networks:
         - subnet: 172.20.0.0/16
 
 volumes:
-  mlflow-data:
   mlflow_data:
     driver: local
   prometheus_data:
     driver: local
   grafana-data:
     driver: local
- 

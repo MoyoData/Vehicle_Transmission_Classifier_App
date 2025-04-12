@@ -31,6 +31,16 @@ groups:
           summary: "High memory usage"
           description: "Memory usage is {{ $value | humanize }}GB, exceeding the 1.5GB threshold."
           
+      # Critical alert for very high memory usage
+      - alert: CriticalMemoryUsage
+        expr: app_memory_usage_bytes / 1024 / 1024 / 1024 > 2.0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical memory usage"
+          description: "Memory usage is {{ $value | humanize }}GB, exceeding the 2GB threshold."
+          
       # Alert for stalled training (no updates to metrics in 15 minutes)
       - alert: StalledTraining
         expr: time() - max(training_epochs_total_created) > 900
@@ -39,4 +49,14 @@ groups:
           severity: warning
         annotations:
           summary: "Training appears to be stalled"
-          description: "No updates to training metrics in the last 15 minute
+          description: "No updates to training metrics in the last 15 minutes. Check if the training process is stalled."
+          
+      # Alert for high CPU usage
+      - alert: HighCPUUsage
+        expr: app_cpu_usage_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value }}%, exceeding the 80% threshold."

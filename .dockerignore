@@ -1,7 +1,6 @@
 # Python cache files
 __pycache__/
 
-
 # Virtual environment
 .venv/
 
@@ -15,13 +14,6 @@ predictions/
 # Model files
 *.pkl
 *.joblib
-
-# Logs
-logs/
-*.log
-
-# MLflow
-mlruns/
 
 # Notebooks directory
 notebooks/

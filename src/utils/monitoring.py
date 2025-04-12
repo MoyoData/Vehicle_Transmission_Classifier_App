@@ -1,5 +1,5 @@
 from prometheus_client import Gauge
-from monitoring_base import TrainingMonitor  # Assuming you have a base class
+from monitoring_base import TrainingMonitor  
 
 class RandomForestModelMonitor(TrainingMonitor):
     def __init__(self, port=8002):
