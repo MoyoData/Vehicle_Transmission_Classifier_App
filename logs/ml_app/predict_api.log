@@ -9,15 +9,11 @@
 2025-04-08 22:06:07,786 - vehicle_classifier.predict_api - INFO - Starting Flask application
 2025-04-08 22:06:10,195 - vehicle_classifier.predict_api - INFO - Starting Flask application
 2025-04-08 22:23:13,183 - vehicle_classifier.predict_api - INFO - Starting application
-<<<<<<< HEAD
 2025-04-10 04:22:17,142 - vehicle_classifier.predict_api - INFO - Starting application
 2025-04-10 04:44:25,288 - vehicle_classifier.predict_api - INFO - Starting application
 2025-04-11 00:30:32,083 - vehicle_classifier.predict_api - INFO - Starting application
 2025-04-11 01:01:34,087 - vehicle_classifier.predict_api - INFO - Starting application
 2025-04-11 01:22:04,211 - vehicle_classifier.predict_api - INFO - Starting application
 2025-04-11 01:40:42,301 - vehicle_classifier.predict_api - INFO - Starting application
-=======
-2025-04-11 02:47:22,688 - vehicle_classifier.predict_api - INFO - Starting application
->>>>>>> 4d8b6f4f44df7b7af163b0baa5d2248a12f7de75
 2025-04-11 20:20:38,075 - vehicle_classifier.predict_api - INFO - Starting application
 2025-04-11 23:39:12,630 - vehicle_classifier.predict_api - INFO - Starting application
