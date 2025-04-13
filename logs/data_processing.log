@@ -12,3 +12,5 @@
 2025-03-23 19:37:02,262 - vehicle_classifier.data_processing - INFO - Data split into training and testing sets
 2025-03-23 19:37:12,691 - vehicle_classifier.data_processing - INFO - Categorical features encoded
 2025-03-23 19:37:13,180 - vehicle_classifier.data_processing - INFO - Processed data saved to data/processed/processed_data.csv
+2025-04-12 20:18:05,522 - vehicle_classifier.data_processing - ERROR - File not found: data/raw/CBB_Listings.csv
+2025-04-12 20:18:05,522 - vehicle_classifier.data_processing - INFO - Exploring data

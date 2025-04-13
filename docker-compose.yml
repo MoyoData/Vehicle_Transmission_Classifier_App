@@ -11,8 +11,7 @@ services:
       - "8001:5001"
     volumes:
       - ./logs/ml_app:/app/logs
-      # Remove this if you want to use the built-in code:
-      # - ./src:/app/src
+      - ./src:/app/src 
     environment:
       - LOG_DIR=/app/logs
       - PROMETHEUS_MULTIPROC_DIR=/app/prometheus_metrics
@@ -89,6 +88,19 @@ services:
       timeout: 10s
       retries: 3
 
+  training-metrics:
+    image: vehicle_transmission_classifier_app-1-ml_app:latest  # Replace with the actual image name
+    container_name: training-metrics
+    ports:
+      - "8002:5000"
+    networks:
+      - ml-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 networks:
   ml-network:
     driver: bridge
@@ -104,4 +116,5 @@ volumes:
     driver: local
   grafana-data:
     driver: local
- 
+  grafana-storage:
+    driver: local
