@@ -1,5 +1,5 @@
 # Use an official lightweight Python image
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -21,24 +21,24 @@ COPY requirements.txt ./
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install prometheus-flask-exporter
+    pip install --no-cache-dir prometheus-flask-exporter
 
 # Copy application files
 COPY src/ /app/src/
-COPY src/models/ /app/models/
 COPY configs/ /app/configs/
 COPY data/ /app/data/
 
-# Expose ports (removed comments to prevent parsing issues)
+# Expose ports
 EXPOSE 5000
 EXPOSE 5001
 
 # Create volumes
-VOLUME ${LOG_DIR} ${PROMETHEUS_MULTIPROC_DIR}
+VOLUME ${LOG_DIR}
+VOLUME ${PROMETHEUS_MULTIPROC_DIR}
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
     CMD curl -f http://localhost:5000/health_status || exit 1
 
 # Entrypoint command
-CMD ["python", "src/predict_api.py"]
+CMD ["python", "/app/src/predict_api.py"]
